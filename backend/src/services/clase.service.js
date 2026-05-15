@@ -4,14 +4,29 @@ const getClases = async () => {
 
     const [rows] = await pool.query(`
         SELECT 
-            c.*,
-            e.idEntrenador,
-            u.nombres AS entrenador_nombre
-        FROM claseGym c
-        INNER JOIN entrenador e 
-            ON c.id_entrenador = e.idEntrenador
-        INNER JOIN usuario u
-            ON e.id_usuario = u.idUsuario
+        c.idClase,
+        c.nombre,
+        c.tipo,
+        c.fecha_hora_inicio,
+        c.fecha_hora_fin,
+        c.aforo,
+        c.cupo_disponible,
+
+        ec.nombre AS estado_clase,
+
+        u.nombres AS entrenador_nombre,
+        u.apellidos AS entrenador_apellido
+
+    FROM claseGym c
+
+    INNER JOIN estado_clase ec
+        ON c.id_estado_clase = ec.idEstadoClase
+
+    INNER JOIN entrenador e
+        ON c.id_entrenador = e.idEntrenador
+
+    INNER JOIN usuario u
+        ON e.id_usuario = u.idUsuario
     `);
 
     return rows;
@@ -36,7 +51,7 @@ const createClase = async (claseData) => {
         fecha_hora_fin,
         aforo,
         cupo_disponible,
-        estado,
+        id_estado_clase,
         id_entrenador,
         id_admin
     } = claseData;
@@ -50,7 +65,7 @@ const createClase = async (claseData) => {
             fecha_hora_fin,
             aforo,
             cupo_disponible,
-            estado,
+            id_estado_clase,
             id_entrenador,
             id_admin
         )
@@ -63,7 +78,7 @@ const createClase = async (claseData) => {
         fecha_hora_fin,
         aforo,
         cupo_disponible,
-        estado,
+        id_estado_clase,
         id_entrenador,
         id_admin
     ]);
@@ -83,7 +98,7 @@ const updateClase = async (id, claseData) => {
         fecha_hora_fin,
         aforo,
         cupo_disponible,
-        estado
+        id_estado_clase
     } = claseData;
 
     await pool.query(`
@@ -95,7 +110,7 @@ const updateClase = async (id, claseData) => {
             fecha_hora_fin = ?,
             aforo = ?,
             cupo_disponible = ?,
-            estado = ?
+            id_estado_clase = ?
         WHERE idClase = ?
     `,
     [
@@ -105,7 +120,7 @@ const updateClase = async (id, claseData) => {
         fecha_hora_fin,
         aforo,
         cupo_disponible,
-        estado,
+        id_estado_clase,
         id
     ]);
 
