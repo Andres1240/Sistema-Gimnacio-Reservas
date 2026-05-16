@@ -42,7 +42,7 @@ const getClaseById = async (id) => {
     return rows[0];
 };
 
-const createClase = async (claseData) => {
+const createClase = async (claseData, user) => {
 
     const {
         nombre,
@@ -52,9 +52,21 @@ const createClase = async (claseData) => {
         aforo,
         cupo_disponible,
         id_estado_clase,
-        id_entrenador,
-        id_admin
+        id_entrenador
     } = claseData;
+
+    // Buscar administrador autenticado
+    const [adminRows] = await pool.query(
+        `SELECT * FROM administrador
+         WHERE id_usuario = ?`,
+        [user.idUsuario]
+    );
+
+    if (adminRows.length === 0) {
+        throw new Error('Administrador no encontrado');
+    }
+
+    const admin = adminRows[0];
 
     const [result] = await pool.query(`
         INSERT INTO claseGym
@@ -80,7 +92,7 @@ const createClase = async (claseData) => {
         cupo_disponible,
         id_estado_clase,
         id_entrenador,
-        id_admin
+        admin.idAdmin
     ]);
 
     return {

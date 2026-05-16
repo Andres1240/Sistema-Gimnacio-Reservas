@@ -41,7 +41,8 @@ const createClase = async (req, res) => {
     try {
 
         const result = await claseService.createClase(
-            req.body
+            req.body,
+            req.user
         );
 
         res.status(201).json(result);
