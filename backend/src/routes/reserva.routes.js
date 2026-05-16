@@ -16,7 +16,11 @@ router.delete(
     reservaController.deleteReserva
 );
 
-router.get('/', reservaController.getReservas);
+router.get(
+    '/',
+    authMiddleware.verifyToken,
+    reservaController.getReservas
+);
 
 
 module.exports = router;

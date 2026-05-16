@@ -1,12 +1,24 @@
 const pool = require('../config/db');
 
-const createReserva = async (reservaData) => {
+const createReserva = async (reservaData, user) => {
 
     const {
-        id_cliente,
         id_clase,
         id_estado_reserva
     } = reservaData;
+
+    // Buscar cliente autenticado
+    const [clienteRows] = await pool.query(
+        `SELECT * FROM cliente
+         WHERE id_usuario = ?`,
+        [user.idUsuario]
+    );
+
+    if (clienteRows.length === 0) {
+        throw new Error('Cliente no encontrado');
+    }
+
+    const cliente = clienteRows[0];
 
     // Verificar si la clase existe
     const [claseRows] = await pool.query(
@@ -30,7 +42,7 @@ const createReserva = async (reservaData) => {
         `SELECT * FROM reserva
          WHERE id_cliente = ?
          AND id_clase = ?`,
-        [id_cliente, id_clase]
+        [cliente.idCliente, id_clase]
     );
 
     if (existingReserva.length > 0) {
@@ -47,7 +59,7 @@ const createReserva = async (reservaData) => {
         )
         VALUES (?, ?, ?)`,
         [
-            id_cliente,
+            cliente.idCliente,
             id_clase,
             id_estado_reserva
         ]

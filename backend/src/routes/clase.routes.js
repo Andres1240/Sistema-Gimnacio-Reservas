@@ -4,9 +4,18 @@ const router = express.Router();
 const claseController = require('../controllers/clase.controller');
 const authMiddleware = require('../middlewares/auth.middleware');
 
-router.get('/', claseController.getClases);
 
-router.get('/:id', claseController.getClaseById);
+router.get(
+    '/',
+    authMiddleware.verifyToken,
+    claseController.getClases
+);
+
+router.get(
+    '/:id',
+    authMiddleware.verifyToken,
+    claseController.getClaseById
+);
 
 
 router.post(

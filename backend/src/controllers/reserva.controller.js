@@ -5,7 +5,8 @@ const createReserva = async (req, res) => {
     try {
 
         const result = await reservaService.createReserva(
-            req.body
+            req.body,
+            req.user
         );
 
         res.status(201).json(result);
