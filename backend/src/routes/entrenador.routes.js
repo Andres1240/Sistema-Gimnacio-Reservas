@@ -27,4 +27,18 @@ router.get(
     entrenadorController.getEntrenadorById
 );
 
+router.put(
+    '/:id',
+    authMiddleware.verifyToken,
+    roleMiddleware.authorizeRoles('ADMINISTRADOR'),
+    entrenadorController.updateEntrenador
+);
+
+router.delete(
+    '/:id',
+    authMiddleware.verifyToken,
+    roleMiddleware.authorizeRoles('ADMINISTRADOR'),
+    entrenadorController.deleteEntrenador
+);
+
 module.exports = router;

@@ -55,8 +55,51 @@ const getEntrenadorById = async (req, res) => {
     }
 };
 
+const updateEntrenador = async (req, res) => {
+
+    try {
+
+        const result = await entrenadorService.updateEntrenador(
+            req.params.id,
+            req.body
+        );
+
+        res.status(200).json(result);
+
+    } catch (error) {
+
+        res.status(400).json({
+            error: error.message
+        });
+
+    }
+};
+
+const deleteEntrenador = async (req, res) => {
+
+    try {
+
+        const result = await entrenadorService.deleteEntrenador(
+            req.params.id
+        );
+
+        res.status(200).json(result);
+
+    } catch (error) {
+
+        res.status(404).json({
+            error: error.message
+        });
+
+    }
+};
+
+
+
 module.exports = {
     createEntrenador,
     getEntrenadores,
-    getEntrenadorById
+    getEntrenadorById,
+    updateEntrenador,
+    deleteEntrenador
 };

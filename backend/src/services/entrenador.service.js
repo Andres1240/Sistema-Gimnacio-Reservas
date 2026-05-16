@@ -148,8 +148,105 @@ const getEntrenadorById = async (id) => {
     return rows[0];
 };
 
+const updateEntrenador = async (id, entrenadorData) => {
+
+    const {
+        nombres,
+        apellidos,
+        correo,
+        experiencia,
+        especialidad,
+        id_estado_entrenador
+    } = entrenadorData;
+
+    // Verificar si entrenador existe
+    const [entrenadorRows] = await pool.query(
+        `SELECT * FROM entrenador
+         WHERE idEntrenador = ?`,
+        [id]
+    );
+
+    if (entrenadorRows.length === 0) {
+        throw new Error('Entrenador no encontrado');
+    }
+
+    const entrenador = entrenadorRows[0];
+
+    // Actualizar usuario
+    await pool.query(`
+        UPDATE usuario
+        SET
+            nombres = ?,
+            apellidos = ?,
+            correo = ?
+        WHERE idUsuario = ?
+    `,
+    [
+        nombres,
+        apellidos,
+        correo,
+        entrenador.id_usuario
+    ]);
+
+    // Actualizar entrenador
+    await pool.query(`
+        UPDATE entrenador
+        SET
+            experiencia = ?,
+            especialidad = ?,
+            id_estado_entrenador = ?
+        WHERE idEntrenador = ?
+    `,
+    [
+        experiencia,
+        especialidad,
+        id_estado_entrenador,
+        id
+    ]);
+
+    return {
+        message: 'Entrenador actualizado correctamente'
+    };
+};
+
+const deleteEntrenador = async (id) => {
+
+    // Verificar existencia
+    const [entrenadorRows] = await pool.query(
+        `SELECT * FROM entrenador
+         WHERE idEntrenador = ?`,
+        [id]
+    );
+
+    if (entrenadorRows.length === 0) {
+        throw new Error('Entrenador no encontrado');
+    }
+
+    const entrenador = entrenadorRows[0];
+
+    // Eliminar entrenador
+    await pool.query(
+        `DELETE FROM entrenador
+         WHERE idEntrenador = ?`,
+        [id]
+    );
+
+    // Eliminar usuario relacionado
+    await pool.query(
+        `DELETE FROM usuario
+         WHERE idUsuario = ?`,
+        [entrenador.id_usuario]
+    );
+
+    return {
+        message: 'Entrenador eliminado correctamente'
+    };
+};
+
 module.exports = {
     createEntrenador,
     getEntrenadores,
-    getEntrenadorById
+    getEntrenadorById,
+    updateEntrenador,
+    deleteEntrenador
 };
