@@ -4,6 +4,7 @@ const cors = require('cors');
 const authRoutes = require('./routes/auth.routes');
 const claseRoutes = require('./routes/clase.routes');
 const reservaRoutes = require('./routes/reserva.routes');
+const entrenadorRoutes = require('./routes/entrenador.routes');
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/clases', claseRoutes);
 app.use('/api/reservas', reservaRoutes);
+app.use('/api/entrenadores', entrenadorRoutes);
 
 app.get('/', (req, res) => {
     res.send('API Gimnasio funcionando');

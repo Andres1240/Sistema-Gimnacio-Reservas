@@ -10,7 +10,7 @@ router.get(
     '/',
     authMiddleware.verifyToken,
     roleMiddleware.authorizeRoles(
-        'ADMIN',
+        'ADMINISTRADOR',
         'CLIENTE',
         'ENTRENADOR'
     ),
@@ -21,7 +21,7 @@ router.get(
     '/:id',
     authMiddleware.verifyToken,
     roleMiddleware.authorizeRoles(
-        'ADMIN',
+        'ADMINISTRADOR',
         'CLIENTE',
         'ENTRENADOR'
     ),
@@ -32,7 +32,7 @@ router.get(
 router.post(
     '/',
     authMiddleware.verifyToken,
-    roleMiddleware.authorizeRoles('ADMIN'),
+    roleMiddleware.authorizeRoles('ADMINISTRADOR'),
     claseController.createClase
 );
 
@@ -40,14 +40,14 @@ router.post(
 router.put(
     '/:id',
     authMiddleware.verifyToken,
-    roleMiddleware.authorizeRoles('ADMIN'),
+    roleMiddleware.authorizeRoles('ADMINISTRADOR'),
     claseController.updateClase
 );
 
 router.delete(
     '/:id',
     authMiddleware.verifyToken,
-    roleMiddleware.authorizeRoles('ADMIN'),
+    roleMiddleware.authorizeRoles('ADMINISTRADOR'),
     claseController.deleteClase
 );
 
