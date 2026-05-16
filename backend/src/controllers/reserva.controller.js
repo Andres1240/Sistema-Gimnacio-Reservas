@@ -37,6 +37,25 @@ const getReservas = async (req, res) => {
     }
 };
 
+const getMisReservas = async (req, res) => {
+
+    try {
+
+        const reservas = await reservaService.getMisReservas(
+            req.user
+        );
+
+        res.status(200).json(reservas);
+
+    } catch (error) {
+
+        res.status(500).json({
+            error: error.message
+        });
+
+    }
+};
+
 const deleteReserva = async (req, res) => {
 
     try {
@@ -59,5 +78,6 @@ const deleteReserva = async (req, res) => {
 module.exports = {
     createReserva,
     getReservas,
+    getMisReservas,
     deleteReserva
 };

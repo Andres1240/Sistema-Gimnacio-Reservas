@@ -111,6 +111,59 @@ const getReservas = async () => {
     return rows;
 };
 
+const getMisReservas = async (user) => {
+
+    // Buscar cliente autenticado
+    const [clienteRows] = await pool.query(
+        `SELECT * FROM cliente
+         WHERE id_usuario = ?`,
+        [user.idUsuario]
+    );
+
+    if (clienteRows.length === 0) {
+        throw new Error('Cliente no encontrado');
+    }
+
+    const cliente = clienteRows[0];
+
+    // Consultar reservas
+    const [rows] = await pool.query(`
+        SELECT
+            r.idReserva,
+            r.fechaReserva,
+
+            er.nombre AS estado_reserva,
+
+            c.nombre AS clase,
+            c.fecha_hora_inicio,
+            c.fecha_hora_fin,
+
+            u.nombres AS cliente_nombre,
+            u.apellidos AS cliente_apellido
+
+        FROM reserva r
+
+        INNER JOIN estado_reserva er
+            ON r.id_estado_reserva = er.idEstadoReserva
+
+        INNER JOIN claseGym c
+            ON r.id_clase = c.idClase
+
+        INNER JOIN cliente cl
+            ON r.id_cliente = cl.idCliente
+
+        INNER JOIN usuario u
+            ON cl.id_usuario = u.idUsuario
+
+        WHERE r.id_cliente = ?
+    `,
+    [
+        cliente.idCliente
+    ]);
+
+    return rows;
+};
+
 const deleteReserva = async (id) => {
 
     // Obtener reserva
@@ -147,5 +200,6 @@ const deleteReserva = async (id) => {
 module.exports = {
     createReserva,
     getReservas,
+    getMisReservas,
     deleteReserva
 };
