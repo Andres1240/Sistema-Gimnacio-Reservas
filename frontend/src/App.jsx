@@ -1,7 +1,28 @@
+import {
+    BrowserRouter,
+    Routes,
+    Route
+} from 'react-router-dom';
+
+import LoginPage
+from './pages/LoginPage';
+
 function App() {
 
     return (
-        <h1>Sistema Gimnasio</h1>
+
+        <BrowserRouter>
+
+            <Routes>
+
+                <Route
+                    path="/"
+                    element={<LoginPage />}
+                />
+
+            </Routes>
+
+        </BrowserRouter>
     );
 }
 
