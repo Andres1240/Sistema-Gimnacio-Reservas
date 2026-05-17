@@ -4,6 +4,15 @@ import {
     Route
 } from 'react-router-dom';
 
+import { useContext }
+from 'react';
+
+import { AuthContext }
+from './context/AuthContext';
+
+import ProtectedRoute
+from './routes/ProtectedRoute';
+
 import LoginPage
 from './pages/LoginPage';
 
@@ -18,6 +27,9 @@ from './pages/EntrenadorPage';
 
 function App() {
 
+    const { user } =
+        useContext(AuthContext);
+
     return (
 
         <BrowserRouter>
@@ -29,19 +41,55 @@ function App() {
                     element={<LoginPage />}
                 />
 
+                {/* ADMIN */}
                 <Route
                     path="/admin"
-                    element={<AdminPage />}
+                    element={
+                        <ProtectedRoute
+                            user={user}
+                            allowedRoles={[
+                                'ADMINISTRADOR'
+                            ]}
+                        >
+
+                            <AdminPage />
+
+                        </ProtectedRoute>
+                    }
                 />
 
+                {/* CLIENTE */}
                 <Route
                     path="/cliente"
-                    element={<ClientePage />}
+                    element={
+                        <ProtectedRoute
+                            user={user}
+                            allowedRoles={[
+                                'CLIENTE'
+                            ]}
+                        >
+
+                            <ClientePage />
+
+                        </ProtectedRoute>
+                    }
                 />
 
+                {/* ENTRENADOR */}
                 <Route
                     path="/entrenador"
-                    element={<EntrenadorPage />}
+                    element={
+                        <ProtectedRoute
+                            user={user}
+                            allowedRoles={[
+                                'ENTRENADOR'
+                            ]}
+                        >
+
+                            <EntrenadorPage />
+
+                        </ProtectedRoute>
+                    }
                 />
 
             </Routes>
