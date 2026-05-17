@@ -5,7 +5,7 @@ const registrarAsistencia = async (asistenciaData) => {
     const {
         id_cliente,
         id_clase,
-        estado_asistencia
+        id_estado_asistencia
     } = asistenciaData;
 
     // Verificar reserva
@@ -18,9 +18,11 @@ const registrarAsistencia = async (asistenciaData) => {
     [id_cliente, id_clase]);
 
     if (reservaRows.length === 0) {
+
         throw new Error(
             'El cliente no tiene reserva para esta clase'
         );
+
     }
 
     // Verificar asistencia existente
@@ -33,9 +35,11 @@ const registrarAsistencia = async (asistenciaData) => {
     [id_cliente, id_clase]);
 
     if (asistenciaExistente.length > 0) {
+
         throw new Error(
             'La asistencia ya fue registrada'
         );
+
     }
 
     // Registrar asistencia
@@ -43,21 +47,23 @@ const registrarAsistencia = async (asistenciaData) => {
         INSERT INTO asistencia
         (
             fecha,
-            estado_asistencia,
             id_cliente,
-            id_clase
+            id_clase,
+            id_estado_asistencia
         )
         VALUES (NOW(), ?, ?, ?)
     `,
     [
-        estado_asistencia,
         id_cliente,
-        id_clase
+        id_clase,
+        id_estado_asistencia
     ]);
 
     return {
+
         message: 'Asistencia registrada correctamente',
         idAsistencia: result.insertId
+
     };
 };
 
@@ -67,7 +73,8 @@ const getAsistentesByClase = async (idClase) => {
         SELECT
             a.idAsistencia,
             a.fecha,
-            a.estado_asistencia,
+
+            ea.nombre AS estado_asistencia,
 
             c.idCliente,
 
@@ -75,6 +82,10 @@ const getAsistentesByClase = async (idClase) => {
             u.apellidos
 
         FROM asistencia a
+
+        INNER JOIN estado_asistencia ea
+            ON a.id_estado_asistencia =
+               ea.idEstadoAsistencia
 
         INNER JOIN cliente c
             ON a.id_cliente = c.idCliente
@@ -91,7 +102,6 @@ const getAsistentesByClase = async (idClase) => {
 
 const getMisAsistencias = async (user) => {
 
-    // Obtener cliente
     const [clienteRows] = await pool.query(`
         SELECT *
         FROM cliente
@@ -105,18 +115,22 @@ const getMisAsistencias = async (user) => {
 
     const cliente = clienteRows[0];
 
-    // Consultar historial
     const [rows] = await pool.query(`
         SELECT
             a.idAsistencia,
             a.fecha,
-            a.estado_asistencia,
+
+            ea.nombre AS estado_asistencia,
 
             cg.nombre,
             cg.tipo,
             cg.fecha_hora_inicio
 
         FROM asistencia a
+
+        INNER JOIN estado_asistencia ea
+            ON a.id_estado_asistencia =
+               ea.idEstadoAsistencia
 
         INNER JOIN claseGym cg
             ON a.id_clase = cg.idClase
