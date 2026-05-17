@@ -7,6 +7,7 @@ const reservaRoutes = require('./routes/reserva.routes');
 const entrenadorRoutes = require('./routes/entrenador.routes');
 const membresiaRoutes = require('./routes/membresia.routes');
 const asistenciaRoutes = require('./routes/asistencia.routes');
+const pagoRoutes = require('./routes/pago.routes');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use('/api/reservas', reservaRoutes);
 app.use('/api/entrenadores', entrenadorRoutes);
 app.use('/api/membresias', membresiaRoutes);
 app.use('/api/asistencias', asistenciaRoutes);
+app.use('/api/pagos', pagoRoutes);
 
 app.get('/', (req, res) => {
     res.send('API Gimnasio funcionando');
