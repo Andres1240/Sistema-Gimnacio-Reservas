@@ -1,17 +1,15 @@
-const express =
-require('express');
+const express = require('express');
+const router = express.Router();
 
-const router =
-express.Router();
 
 const clienteController =
-require('./cliente.controller');
+require('../controllers/cliente.controller');
 
 const authMiddleware =
-require('../../middlewares/auth.middleware');
+    require('../middlewares/auth.middleware');
 
 const roleMiddleware =
-require('../../middlewares/role.middleware');
+    require('../middlewares/role.middleware');
 
 
 // =========================
@@ -23,7 +21,7 @@ router.get(
 
     authMiddleware.verifyToken,
 
-    roleMiddleware.verifyRole(
+    roleMiddleware.authorizeRoles(
         'ADMINISTRADOR'
     ),
 
@@ -40,7 +38,7 @@ router.get(
 
     authMiddleware.verifyToken,
 
-    roleMiddleware.verifyRole(
+    roleMiddleware.authorizeRoles(
         'ADMINISTRADOR'
     ),
 

@@ -8,7 +8,7 @@ const entrenadorRoutes = require('./routes/entrenador.routes');
 const membresiaRoutes = require('./routes/membresia.routes');
 const asistenciaRoutes = require('./routes/asistencia.routes');
 const pagoRoutes = require('./routes/pago.routes');
-const clienteRoutes = require('./modules/cliente/cliente.routes');
+const clienteRoutes = require('./routes/cliente.routes');
 
 const app = express();
 

@@ -1,5 +1,5 @@
 const clienteService =
-require('./cliente.service');
+require('../services/cliente.service');
 
 
 // =========================
