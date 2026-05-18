@@ -18,6 +18,15 @@ router.get(
 );
 
 router.get(
+    '/mis-clases',
+    authMiddleware.verifyToken,
+    roleMiddleware.authorizeRoles(
+        'ENTRENADOR'
+    ),
+    claseController.getMisClases
+);
+
+router.get(
     '/:id',
     authMiddleware.verifyToken,
     roleMiddleware.authorizeRoles(

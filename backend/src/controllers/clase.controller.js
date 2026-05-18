@@ -95,10 +95,34 @@ const deleteClase = async (req, res) => {
     }
 };
 
+const getMisClases =
+async (req, res) => {
+
+    try {
+
+        const clases =
+        await claseService.getMisClases(
+            req.user
+        );
+
+        res.status(200).json(
+            clases
+        );
+
+    } catch (error) {
+
+        res.status(400).json({
+
+            error: error.message
+        });
+    }
+};
+
 module.exports = {
     getClases,
     getClaseById,
     createClase,
     updateClase,
-    deleteClase
+    deleteClase,
+    getMisClases
 };

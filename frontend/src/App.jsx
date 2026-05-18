@@ -46,6 +46,9 @@ from './pages/MisReservasPage';
 import MiMembresiaPage
 from './pages/MiMembresiaPage';
 
+import MisClasesEntrenadorPage
+from './pages/MisClasesEntrenadorPage';
+
 function App() {
 
     const { user } =
@@ -227,6 +230,23 @@ function App() {
                         >
 
                             <EntrenadorPage />
+
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/entrenador/clases"
+                    element={
+
+                        <ProtectedRoute
+                            user={user}
+                            allowedRoles={[
+                                'ENTRENADOR'
+                            ]}
+                        >
+
+                            <MisClasesEntrenadorPage />
 
                         </ProtectedRoute>
                     }

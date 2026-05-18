@@ -77,3 +77,17 @@ async (id, data) => {
 
     return response.data;
 };
+
+export const getMisClases =
+async () => {
+
+    const response =
+    await axios.get(
+
+        `${API_URL}/mis-clases`,
+
+        authHeader()
+    );
+
+    return response.data;
+};

@@ -424,10 +424,74 @@ const deleteClase = async (id) => {
     };
 };
 
+const getMisClases =
+async (user) => {
+
+    // Buscar entrenador autenticado
+    const [entrenadorRows] =
+    await pool.query(
+
+        `SELECT *
+         FROM entrenador
+         WHERE id_usuario = ?`,
+
+        [user.idUsuario]
+    );
+
+    if (
+        entrenadorRows.length === 0
+    ) {
+
+        throw new Error(
+            'Entrenador no encontrado'
+        );
+    }
+
+    const entrenador =
+        entrenadorRows[0];
+
+
+    // Obtener clases
+    const [rows] =
+    await pool.query(`
+
+        SELECT
+
+            c.idClase,
+            c.nombre,
+            c.tipo,
+            c.fecha_hora_inicio,
+            c.fecha_hora_fin,
+            c.aforo,
+            c.cupo_disponible,
+
+            ec.nombre
+            AS estado_clase
+
+        FROM claseGym c
+
+        INNER JOIN estado_clase ec
+            ON c.id_estado_clase =
+            ec.idEstadoClase
+
+        WHERE c.id_entrenador = ?
+
+        ORDER BY
+            c.fecha_hora_inicio ASC
+
+    `,
+    [
+        entrenador.idEntrenador
+    ]);
+
+    return rows;
+};
+
 module.exports = {
     getClases,
     getClaseById,
     createClase,
     updateClase,
-    deleteClase
+    deleteClase,
+    getMisClases
 };
