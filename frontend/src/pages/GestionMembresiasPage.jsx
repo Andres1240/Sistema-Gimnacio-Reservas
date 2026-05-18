@@ -5,6 +5,9 @@ import {
 
 } from 'react';
 
+import { useNavigate }
+from 'react-router-dom';
+
 import axios from 'axios';
 
 import {
@@ -22,6 +25,9 @@ function GestionMembresiasPage() {
     // =========================
     // STATES
     // =========================
+
+    const navigate =
+    useNavigate();
 
     const [membresias, setMembresias] =
         useState([]);
@@ -306,6 +312,16 @@ function GestionMembresiasPage() {
             <h1>
                 Gestión de Membresías
             </h1>
+
+            <button
+                onClick={() =>
+                    navigate('/admin')
+                }
+            >
+
+                Volver al Panel
+
+            </button>
 
             <hr />
 

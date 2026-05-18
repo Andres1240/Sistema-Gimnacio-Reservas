@@ -5,6 +5,9 @@ import {
 
 } from 'react';
 
+import { useNavigate }
+from 'react-router-dom';
+
 import {
 
     getEntrenadores,
@@ -18,6 +21,9 @@ import axios from 'axios';
 
 
 function GestionEntrenadoresPage() {
+
+    const navigate =
+    useNavigate();
 
     const [entrenadores, setEntrenadores] =
         useState([]);
@@ -276,6 +282,16 @@ function GestionEntrenadoresPage() {
             <h1>
                 Gestión de Entrenadores
             </h1>
+
+            <button
+                onClick={() =>
+                    navigate('/admin')
+                }
+            >
+
+                Volver al Panel
+
+            </button>
 
             <hr />
 

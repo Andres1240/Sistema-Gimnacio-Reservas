@@ -5,6 +5,9 @@ import {
 
 } from 'react';
 
+import { useNavigate }
+from 'react-router-dom';
+
 import axios from 'axios';
 
 import {
@@ -21,6 +24,9 @@ function GestionPagosPage() {
     // =========================
     // STATES
     // =========================
+
+    const navigate =
+    useNavigate();
 
     const [pagos, setPagos] =
     useState([]);
@@ -291,6 +297,16 @@ function GestionPagosPage() {
             <h1>
                 Gestión de Pagos
             </h1>
+
+            <button
+                onClick={() =>
+                    navigate('/admin')
+                }
+            >
+
+                Volver al Panel
+
+            </button>
 
             <hr />
 

@@ -5,6 +5,9 @@ import {
 
 } from 'react';
 
+import { useNavigate }
+from 'react-router-dom';
+
 import {
 
     getClases,
@@ -26,6 +29,8 @@ function GestionClasesPage() {
     // =========================
     // STATES
     // =========================
+    const navigate =
+    useNavigate();
 
     const [clases, setClases] =
         useState([]);
@@ -330,8 +335,18 @@ function GestionClasesPage() {
         <div>
 
             <h1>
-                Panel Administrador
+                Gestión de Clases
             </h1>
+
+            <button
+                onClick={() =>
+                    navigate('/admin')
+                }
+            >
+
+                Volver al Panel
+
+            </button>
 
 
             {/* ========================= */}
