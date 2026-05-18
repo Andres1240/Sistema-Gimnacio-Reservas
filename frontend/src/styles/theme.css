@@ -1,0 +1,135 @@
+:root {
+
+    --primary-dark:
+        #071739;
+
+    --primary:
+        #4B6382;
+
+    --secondary:
+        #A4B5C4;
+
+    --light:
+        #CDD5DB;
+
+    --accent:
+        #A68868;
+
+    --accent-light:
+        #E3C39D;
+
+    --white:
+        #FFFFFF;
+}
+
+
+/* ========================= */
+/* BODY */
+/* ========================= */
+
+body {
+
+    margin: 0;
+
+    padding: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background-color:
+        var(--light);
+
+    color:
+        var(--primary-dark);
+}
+
+
+/* ========================= */
+/* BOTONES */
+/* ========================= */
+
+.btn-custom {
+
+    background-color:
+        var(--primary);
+
+    color:
+        var(--white);
+
+    border:
+        none;
+
+    padding:
+        10px 20px;
+
+    border-radius:
+        8px;
+
+    cursor:
+        pointer;
+
+    transition:
+        0.3s;
+}
+
+.btn-custom:hover {
+
+    background-color:
+        var(--accent);
+}
+
+
+/* ========================= */
+/* CARDS */
+/* ========================= */
+
+.card-custom {
+
+    background-color:
+        var(--white);
+
+    border-radius:
+        12px;
+
+    padding:
+        25px;
+
+    box-shadow:
+        0 4px 10px rgba(0,0,0,0.1);
+}
+
+
+/* ========================= */
+/* INPUTS */
+/* ========================= */
+
+.input-custom {
+
+    width:
+        100%;
+
+    padding:
+        10px;
+
+    border:
+        1px solid var(--secondary);
+
+    border-radius:
+        8px;
+
+    box-sizing:
+        border-box;
+}
+
+
+/* ========================= */
+/* TITULOS */
+/* ========================= */
+
+.title-custom {
+
+    color:
+        var(--primary-dark);
+}
