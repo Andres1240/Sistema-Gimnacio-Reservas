@@ -31,6 +31,9 @@ from './pages/GestionClasesPage';
 import GestionEntrenadoresPage
 from './pages/GestionEntrenadoresPage';
 
+import GestionMembresiasPage
+from './pages/GestionMembresiasPage';
+
 function App() {
 
     const { user } =
@@ -93,6 +96,23 @@ function App() {
                         >
 
                             <GestionEntrenadoresPage />
+
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/admin/membresias"
+                    element={
+
+                        <ProtectedRoute
+                            user={user}
+                            allowedRoles={[
+                                'ADMINISTRADOR'
+                            ]}
+                        >
+
+                            <GestionMembresiasPage />
 
                         </ProtectedRoute>
                     }
