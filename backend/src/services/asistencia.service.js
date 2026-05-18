@@ -67,33 +67,49 @@ const registrarAsistencia = async (asistenciaData) => {
     };
 };
 
-const getAsistentesByClase = async (idClase) => {
+const getAsistentesByClase =
+async (idClase) => {
 
-    const [rows] = await pool.query(`
+    const [rows] =
+    await pool.query(`
+
         SELECT
-            a.idAsistencia,
-            a.fecha,
 
-            ea.nombre AS estado_asistencia,
+            r.idReserva,
 
             c.idCliente,
 
             u.nombres,
-            u.apellidos
+            u.apellidos,
 
-        FROM asistencia a
+            a.idAsistencia,
 
-        INNER JOIN estado_asistencia ea
+            ea.nombre
+            AS estado_asistencia
+
+        FROM reserva r
+
+        INNER JOIN cliente c
+            ON r.id_cliente =
+               c.idCliente
+
+        INNER JOIN usuario u
+            ON c.id_usuario =
+               u.idUsuario
+
+        LEFT JOIN asistencia a
+            ON r.id_cliente =
+               a.id_cliente
+
+            AND r.id_clase =
+                a.id_clase
+
+        LEFT JOIN estado_asistencia ea
             ON a.id_estado_asistencia =
                ea.idEstadoAsistencia
 
-        INNER JOIN cliente c
-            ON a.id_cliente = c.idCliente
+        WHERE r.id_clase = ?
 
-        INNER JOIN usuario u
-            ON c.id_usuario = u.idUsuario
-
-        WHERE a.id_clase = ?
     `,
     [idClase]);
 

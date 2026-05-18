@@ -49,6 +49,9 @@ from './pages/MiMembresiaPage';
 import MisClasesEntrenadorPage
 from './pages/MisClasesEntrenadorPage';
 
+import AsistenciasEntrenadorPage
+from './pages/AsistenciasEntrenadorPage';
+
 function App() {
 
     const { user } =
@@ -247,6 +250,23 @@ function App() {
                         >
 
                             <MisClasesEntrenadorPage />
+
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/entrenador/asistencias"
+                    element={
+
+                        <ProtectedRoute
+                            user={user}
+                            allowedRoles={[
+                                'ENTRENADOR'
+                            ]}
+                        >
+
+                            <AsistenciasEntrenadorPage />
 
                         </ProtectedRoute>
                     }

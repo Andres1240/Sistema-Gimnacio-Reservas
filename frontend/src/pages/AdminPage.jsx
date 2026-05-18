@@ -1,7 +1,44 @@
-import { Link }
-from 'react-router-dom';
+import {
+
+    Link,
+    useNavigate
+
+} from 'react-router-dom';
+
+import {
+
+    useContext
+
+} from 'react';
+
+import {
+
+    AuthContext
+
+} from '../context/AuthContext';
+
 
 function AdminPage() {
+
+    const navigate =
+        useNavigate();
+
+    const {
+
+        logout
+
+    } = useContext(
+        AuthContext
+    );
+
+
+    const handleLogout = () => {
+
+        logout();
+
+        navigate('/');
+    };
+
 
     return (
 
@@ -71,6 +108,18 @@ function AdminPage() {
                 </li>
 
             </ul>
+
+
+            <hr />
+
+
+            <button
+                onClick={handleLogout}
+            >
+
+                Cerrar Sesión
+
+            </button>
 
         </div>
     );

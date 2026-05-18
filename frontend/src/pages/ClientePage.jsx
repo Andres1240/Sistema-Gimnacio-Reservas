@@ -1,10 +1,43 @@
-import { useNavigate }
-from 'react-router-dom';
+import {
+
+    useNavigate
+
+} from 'react-router-dom';
+
+import {
+
+    useContext
+
+} from 'react';
+
+import {
+
+    AuthContext
+
+} from '../context/AuthContext';
+
 
 function ClientePage() {
 
     const navigate =
         useNavigate();
+
+    const {
+
+        logout
+
+    } = useContext(
+        AuthContext
+    );
+
+
+    const handleLogout = () => {
+
+        logout();
+
+        navigate('/');
+    };
+
 
     return (
 
@@ -15,6 +48,7 @@ function ClientePage() {
             </h1>
 
             <hr />
+
 
             <button
                 onClick={() =>
@@ -55,6 +89,17 @@ function ClientePage() {
             >
 
                 Mi Membresía
+
+            </button>
+
+            <br /><br />
+
+
+            <button
+                onClick={handleLogout}
+            >
+
+                Cerrar Sesión
 
             </button>
 
