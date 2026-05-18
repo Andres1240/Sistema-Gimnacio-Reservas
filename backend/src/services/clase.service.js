@@ -3,7 +3,9 @@ const pool = require('../config/db');
 const getClases = async () => {
 
     const [rows] = await pool.query(`
+    
         SELECT 
+        
         c.idClase,
         c.nombre,
         c.tipo,
@@ -12,21 +14,24 @@ const getClases = async () => {
         c.aforo,
         c.cupo_disponible,
 
+        c.id_estado_clase,
+        c.id_entrenador,
+
         ec.nombre AS estado_clase,
 
         u.nombres AS entrenador_nombre,
         u.apellidos AS entrenador_apellido
 
-    FROM claseGym c
+        FROM claseGym c
 
-    INNER JOIN estado_clase ec
-        ON c.id_estado_clase = ec.idEstadoClase
+        INNER JOIN estado_clase ec
+            ON c.id_estado_clase = ec.idEstadoClase
 
-    INNER JOIN entrenador e
-        ON c.id_entrenador = e.idEntrenador
+        INNER JOIN entrenador e
+            ON c.id_entrenador = e.idEntrenador
 
-    INNER JOIN usuario u
-        ON e.id_usuario = u.idUsuario
+        INNER JOIN usuario u
+            ON e.id_usuario = u.idUsuario
     `);
 
     return rows;

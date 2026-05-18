@@ -50,3 +50,30 @@ export const createClase = async (data) => {
 
     return response.data;
 };
+
+export const deleteClase = async (id) => {
+
+    const response = await axios.delete(
+
+        `${API_URL}/${id}`,
+
+        authHeader()
+    );
+
+    return response.data;
+};
+
+export const updateClase =
+async (id, data) => {
+
+    const response = await axios.put(
+
+        `${API_URL}/${id}`,
+
+        data,
+
+        authHeader()
+    );
+
+    return response.data;
+};

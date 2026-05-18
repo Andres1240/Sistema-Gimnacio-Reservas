@@ -8,7 +8,9 @@ import {
 import {
 
     getClases,
-    createClase
+    createClase,
+    deleteClase,
+    updateClase
 
 } from '../services/clase.service';
 
@@ -45,7 +47,9 @@ function GestionClasesPage() {
             id_entrenador: ''
 
         });
-
+        
+    const [editingId, setEditingId] =
+    useState(null);
 
     // =========================
     // OBTENER CLASES
@@ -201,14 +205,30 @@ function GestionClasesPage() {
 
         try {
 
-            await createClase(form);
+            if (editingId) {
 
-            alert(
-                'Clase creada correctamente'
-            );
+                await updateClase(
+                    editingId,
+                    form
+                );
+
+                alert(
+                    'Clase actualizada correctamente'
+                );
+
+            } else {
+
+                await createClase(form);
+
+                alert(
+                    'Clase creada correctamente'
+                );
+            }
 
             // Recargar clases
             loadClases();
+
+            setEditingId(null);
 
             // Limpiar formulario
             setForm({
@@ -235,6 +255,75 @@ function GestionClasesPage() {
         }
     };
 
+    const handleDelete = async (id) => {
+
+        const confirmar =
+            window.confirm(
+                '¿Eliminar esta clase?'
+            );
+
+        if (!confirmar) {
+
+            return;
+        }
+
+        try {
+
+            await deleteClase(id);
+
+            alert(
+                'Clase eliminada correctamente'
+            );
+
+            // Recargar clases
+            loadClases();
+
+        } catch (error) {
+
+            alert(
+
+                error.response?.data?.error
+                || 'Error al eliminar clase'
+
+            );
+        }
+    };
+
+    const handleEdit = (clase) => {
+
+        setEditingId(
+            clase.idClase
+        );
+
+        setForm({
+
+            nombre:
+                clase.nombre,
+
+            tipo:
+                clase.tipo,
+
+            fecha_hora_inicio:
+                clase.fecha_hora_inicio
+                    ?.slice(0, 16),
+
+            fecha_hora_fin:
+                clase.fecha_hora_fin
+                    ?.slice(0, 16),
+
+            aforo:
+                clase.aforo,
+
+            cupo_disponible:
+                clase.cupo_disponible,
+
+            id_estado_clase:
+                clase.id_estado_clase,
+
+            id_entrenador:
+                clase.id_entrenador
+        });
+    };
 
     return (
 
@@ -421,7 +510,18 @@ function GestionClasesPage() {
 
                 <button type="submit">
 
-                    Crear Clase
+                    {
+
+                        editingId
+                            ?
+
+                            'Actualizar Clase'
+
+                            :
+
+                            'Crear Clase'
+
+                    }
 
                 </button>
 
@@ -550,6 +650,24 @@ function GestionClasesPage() {
                                 clase.entrenador_apellido
                             }
                         </p>
+                        <button
+                            onClick={() =>
+                                handleDelete(clase.idClase)
+                            }
+                        >
+
+                            Eliminar
+
+                        </button>
+                        <button
+                            onClick={() =>
+                                handleEdit(clase)
+                            }
+                        >
+
+                            Editar
+
+                        </button>
 
                     </div>
                 ))

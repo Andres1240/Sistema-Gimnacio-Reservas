@@ -25,6 +25,9 @@ from './pages/ClientePage';
 import EntrenadorPage
 from './pages/EntrenadorPage';
 
+import GestionClasesPage
+from './pages/GestionClasesPage';
+
 function App() {
 
     const { user } =
@@ -53,6 +56,23 @@ function App() {
                         >
 
                             <AdminPage />
+
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/admin/clases"
+                    element={
+
+                        <ProtectedRoute
+                            user={user}
+                            allowedRoles={[
+                                'ADMINISTRADOR'
+                            ]}
+                        >
+
+                            <GestionClasesPage />
 
                         </ProtectedRoute>
                     }
