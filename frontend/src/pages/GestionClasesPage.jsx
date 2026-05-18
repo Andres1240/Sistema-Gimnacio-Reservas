@@ -1,0 +1,562 @@
+import {
+
+    useEffect,
+    useState
+
+} from 'react';
+
+import {
+
+    getClases,
+    createClase
+
+} from '../services/clase.service';
+
+import {
+
+    getEntrenadores
+
+} from '../services/entrenador.service';
+
+
+function GestionClasesPage() {
+
+    // =========================
+    // STATES
+    // =========================
+
+    const [clases, setClases] =
+        useState([]);
+
+    const [entrenadores,
+        setEntrenadores] =
+        useState([]);
+
+    const [form, setForm] =
+        useState({
+
+            nombre: '',
+            tipo: '',
+            fecha_hora_inicio: '',
+            fecha_hora_fin: '',
+            aforo: '',
+            cupo_disponible: '',
+            id_estado_clase: '',
+            id_entrenador: ''
+
+        });
+
+
+    // =========================
+    // OBTENER CLASES
+    // =========================
+
+    const loadClases = async () => {
+
+        try {
+
+            const data =
+                await getClases();
+
+            setClases(data);
+
+        } catch (error) {
+
+            console.log(error);
+        }
+    };
+
+
+    // =========================
+    // OBTENER ENTRENADORES
+    // =========================
+
+    const loadEntrenadores =
+    async () => {
+
+        try {
+
+            const data =
+                await getEntrenadores();
+
+            setEntrenadores(data);
+
+        } catch (error) {
+
+            console.log(error);
+        }
+    };
+
+
+    // =========================
+    // USE EFFECT
+    // =========================
+
+    useEffect(() => {
+
+        loadClases();
+        loadEntrenadores();
+
+    }, []);
+
+
+    // =========================
+    // MANEJAR INPUTS
+    // =========================
+
+    const handleChange = (e) => {
+
+        setForm({
+
+            ...form,
+            [e.target.name]:
+                e.target.value
+
+        });
+    };
+
+
+    // =========================
+    // CREAR CLASE
+    // =========================
+
+    const handleSubmit = async (e) => {
+
+        e.preventDefault();
+
+        // =========================
+        // VALIDAR CAMPOS VACÍOS
+        // =========================
+
+        if (
+            !form.nombre ||
+            !form.tipo ||
+            !form.fecha_hora_inicio ||
+            !form.fecha_hora_fin ||
+            !form.aforo ||
+            !form.cupo_disponible ||
+            !form.id_estado_clase ||
+            !form.id_entrenador
+        ) {
+
+            alert(
+                'Todos los campos son obligatorios'
+            );
+
+            return;
+        }
+
+
+        // =========================
+        // VALIDAR NEGATIVOS
+        // =========================
+
+        if (
+            form.aforo < 0 ||
+            form.cupo_disponible < 0
+        ) {
+
+            alert(
+                'Los valores no pueden ser negativos'
+            );
+
+            return;
+        }
+
+
+        // =========================
+        // VALIDAR CUPOS
+        // =========================
+
+        if (
+            Number(form.cupo_disponible)
+            >
+            Number(form.aforo)
+        ) {
+
+            alert(
+                'Los cupos no pueden superar el aforo'
+            );
+
+            return;
+        }
+
+
+        // =========================
+        // VALIDAR FECHAS
+        // =========================
+
+        if (
+            new Date(form.fecha_hora_fin)
+            <=
+            new Date(form.fecha_hora_inicio)
+        ) {
+
+            alert(
+                'La fecha final debe ser mayor'
+            );
+
+            return;
+        }
+
+        try {
+
+            await createClase(form);
+
+            alert(
+                'Clase creada correctamente'
+            );
+
+            // Recargar clases
+            loadClases();
+
+            // Limpiar formulario
+            setForm({
+
+                nombre: '',
+                tipo: '',
+                fecha_hora_inicio: '',
+                fecha_hora_fin: '',
+                aforo: '',
+                cupo_disponible: '',
+                id_estado_clase: '',
+                id_entrenador: ''
+
+            });
+
+        } catch (error) {
+
+            alert(
+
+                error.response?.data?.error
+                || 'Error al crear clase'
+
+            );
+        }
+    };
+
+
+    return (
+
+        <div>
+
+            <h1>
+                Panel Administrador
+            </h1>
+
+
+            {/* ========================= */}
+            {/* FORMULARIO */}
+            {/* ========================= */}
+
+            <h2>
+                Crear Clase
+            </h2>
+
+            <form onSubmit={handleSubmit}>
+
+                {/* Nombre */}
+
+                <input
+                    type="text"
+                    name="nombre"
+                    placeholder="Nombre"
+                    value={form.nombre}
+                    onChange={handleChange}
+                />
+
+                <br /><br />
+
+
+                {/* Tipo */}
+
+                <input
+                    type="text"
+                    name="tipo"
+                    placeholder="Tipo"
+                    value={form.tipo}
+                    onChange={handleChange}
+                />
+
+                <br /><br />
+
+
+                {/* Fecha inicio */}
+
+                <input
+                    type="datetime-local"
+                    name="fecha_hora_inicio"
+                    value={
+                        form.fecha_hora_inicio
+                    }
+                    onChange={handleChange}
+                />
+
+                <br /><br />
+
+
+                {/* Fecha fin */}
+
+                <input
+                    type="datetime-local"
+                    name="fecha_hora_fin"
+                    value={
+                        form.fecha_hora_fin
+                    }
+                    onChange={handleChange}
+                />
+
+                <br /><br />
+
+
+                {/* Aforo */}
+
+                <input
+                    type="number"
+                    name="aforo"
+                    placeholder="Aforo"
+                    value={form.aforo}
+                    onChange={handleChange}
+                    min="0"
+                />
+
+                <br /><br />
+
+
+                {/* Cupos */}
+
+                <input
+                    type="number"
+                    name="cupo_disponible"
+                    placeholder="Cupos disponibles"
+                    value={
+                        form.cupo_disponible
+                    }
+                    onChange={handleChange}
+                    min="0"
+                />
+
+                <br /><br />
+
+
+                {/* Estado clase */}
+
+                <select
+                    name="id_estado_clase"
+                    value={
+                        form.id_estado_clase
+                    }
+                    onChange={handleChange}
+                >
+
+                    <option value="">
+                        Seleccione estado
+                    </option>
+
+                    <option value="1">
+                        Programada
+                    </option>
+
+                    <option value="2">
+                        Finalizada
+                    </option>
+
+                    <option value="3">
+                        Cancelada
+                    </option>
+
+                </select>
+
+                <br /><br />
+
+
+                {/* Entrenador */}
+
+                <select
+                    name="id_entrenador"
+                    value={
+                        form.id_entrenador
+                    }
+                    onChange={handleChange}
+                >
+
+                    <option value="">
+                        Seleccione entrenador
+                    </option>
+
+                    {
+
+                        entrenadores.map(
+                            (entrenador) => (
+
+                                <option
+                                    key={
+                                        entrenador.idEntrenador
+                                    }
+
+                                    value={
+                                        entrenador.idEntrenador
+                                    }
+                                >
+
+                                    {
+                                        entrenador.nombres
+                                    }
+
+                                    {' '}
+
+                                    {
+                                        entrenador.apellidos
+                                    }
+
+                                </option>
+                            )
+                        )
+                    }
+
+                </select>
+
+                <br /><br />
+
+
+                <button type="submit">
+
+                    Crear Clase
+
+                </button>
+
+            </form>
+
+
+            <hr />
+
+
+            {/* ========================= */}
+            {/* LISTADO CLASES */}
+            {/* ========================= */}
+
+            <h2>
+                Clases Registradas
+            </h2>
+
+            {
+
+                clases.map((clase) => (
+
+                    <div
+                        key={clase.idClase}
+                    >
+
+                        <hr />
+
+                        <h3>
+                            {clase.nombre}
+                        </h3>
+
+                        <p>
+                            <strong>
+                                Tipo:
+                            </strong>
+
+                            {' '}
+
+                            {clase.tipo}
+                        </p>
+
+                        <p>
+                            <strong>
+                                Inicio:
+                            </strong>
+
+                            {' '}
+
+                            {
+                                new Date(
+                                    clase.fecha_hora_inicio
+                                ).toLocaleString(
+                                    'es-CO',
+                                    {
+                                        dateStyle: 'short',
+                                        timeStyle: 'short'
+                                    }
+                                )
+                            }
+                        </p>
+
+                        <p>
+                            <strong>
+                                Fin:
+                            </strong>
+
+                            {' '}
+
+                            {
+                                new Date(
+                                    clase.fecha_hora_fin
+                                ).toLocaleString(
+                                    'es-CO',
+                                    {
+                                        dateStyle: 'short',
+                                        timeStyle: 'short'
+                                    }
+                                )
+                            }
+                        </p>
+
+                        <p>
+                            <strong>
+                                Cupos:
+                            </strong>
+
+                            {' '}
+
+                            {
+                                clase.cupo_disponible
+                            }
+
+                            /
+
+                            {
+                                clase.aforo
+                            }
+                        </p>
+
+                        <p>
+                            <strong>
+                                Estado:
+                            </strong>
+
+                            {' '}
+
+                            {
+                                clase.estado_clase
+                            }
+                        </p>
+
+                        <p>
+                            <strong>
+                                Entrenador:
+                            </strong>
+
+                            {' '}
+
+                            {
+                                clase.entrenador_nombre
+                            }
+
+                            {' '}
+
+                            {
+                                clase.entrenador_apellido
+                            }
+                        </p>
+
+                    </div>
+                ))
+            }
+
+        </div>
+    );
+}
+
+export default GestionClasesPage;
