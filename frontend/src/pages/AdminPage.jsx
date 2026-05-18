@@ -124,11 +124,76 @@ function AdminPage() {
 
         e.preventDefault();
 
-        if (form.aforo < 0 ||
-            form.cupo_disponible < 0) {
+        // =========================
+        // VALIDAR CAMPOS VACÍOS
+        // =========================
+
+        if (
+            !form.nombre ||
+            !form.tipo ||
+            !form.fecha_hora_inicio ||
+            !form.fecha_hora_fin ||
+            !form.aforo ||
+            !form.cupo_disponible ||
+            !form.id_estado_clase ||
+            !form.id_entrenador
+        ) {
+
+            alert(
+                'Todos los campos son obligatorios'
+            );
+
+            return;
+        }
+
+
+        // =========================
+        // VALIDAR NEGATIVOS
+        // =========================
+
+        if (
+            form.aforo < 0 ||
+            form.cupo_disponible < 0
+        ) {
 
             alert(
                 'Los valores no pueden ser negativos'
+            );
+
+            return;
+        }
+
+
+        // =========================
+        // VALIDAR CUPOS
+        // =========================
+
+        if (
+            Number(form.cupo_disponible)
+            >
+            Number(form.aforo)
+        ) {
+
+            alert(
+                'Los cupos no pueden superar el aforo'
+            );
+
+            return;
+        }
+
+
+        // =========================
+        // VALIDAR FECHAS
+        // =========================
+
+        if (
+            new Date(form.fecha_hora_fin)
+            <=
+            new Date(form.fecha_hora_inicio)
+        ) {
+
+            alert(
+                'La fecha final debe ser mayor'
             );
 
             return;
