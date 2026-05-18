@@ -94,10 +94,32 @@ const deleteMembresia = async (req, res) => {
     }
 };
 
+const getMiMembresia =
+    async (req, res) => {
+
+        try {
+
+            const result =
+                await membresiaService.getMiMembresia(
+                    req.user
+                );
+
+            res.json(result);
+
+        } catch (error) {
+
+            res.status(400).json({
+
+                error: error.message
+            });
+        }
+    };
+
 module.exports = {
     createMembresia,
     getMembresias,
     getMembresiaById,
     updateMembresia,
-    deleteMembresia
+    deleteMembresia,
+    getMiMembresia
 };

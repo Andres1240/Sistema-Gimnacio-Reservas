@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_URL =
-'http://localhost:3000/api/membresias';
+'http://localhost:3000/api/reservas';
 
 
 const authHeader = () => {
@@ -20,24 +20,11 @@ const authHeader = () => {
 };
 
 
+// =========================
+// CREAR RESERVA
+// =========================
 
-export const getMembresias =
-async () => {
-
-    const response =
-    await axios.get(
-
-        API_URL,
-
-        authHeader()
-    );
-
-    return response.data;
-};
-
-
-
-export const createMembresia =
+export const createReserva =
 async (data) => {
 
     const response =
@@ -54,15 +41,17 @@ async (data) => {
 };
 
 
-export const updateMembresia =
-async (id, data) => {
+// =========================
+// MIS RESERVAS
+// =========================
+
+export const getMisReservas =
+async () => {
 
     const response =
-    await axios.put(
+    await axios.get(
 
-        `${API_URL}/${id}`,
-
-        data,
+        `${API_URL}/mis-reservas`,
 
         authHeader()
     );
@@ -71,27 +60,17 @@ async (id, data) => {
 };
 
 
-export const deleteMembresia =
+// =========================
+// ELIMINAR RESERVA
+// =========================
+
+export const deleteReserva =
 async (id) => {
 
     const response =
     await axios.delete(
 
         `${API_URL}/${id}`,
-
-        authHeader()
-    );
-
-    return response.data;
-};
-
-export const getMiMembresia =
-async () => {
-
-    const response =
-    await axios.get(
-
-        `${API_URL}/mi-membresia`,
 
         authHeader()
     );

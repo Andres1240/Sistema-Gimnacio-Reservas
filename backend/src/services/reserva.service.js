@@ -32,6 +32,14 @@ const createReserva = async (reservaData, user) => {
 
     const clase = claseRows[0];
 
+    //evitaar reservas en clases finalizadas o canceladas
+    if (clase.id_estado_clase !== 1) {
+
+        throw new Error(
+            'La clase no está disponible para reservas'
+        );
+    }
+
     // Validar cupos
     if (clase.cupo_disponible <= 0) {
         throw new Error('No hay cupos disponibles');
@@ -128,35 +136,44 @@ const getMisReservas = async (user) => {
 
     // Consultar reservas
     const [rows] = await pool.query(`
-        SELECT
-            r.idReserva,
-            r.fechaReserva,
+    
+    SELECT
 
-            er.nombre AS estado_reserva,
+        r.idReserva,
+        r.fechaReserva,
 
-            c.nombre AS clase,
-            c.fecha_hora_inicio,
-            c.fecha_hora_fin,
+        er.nombre AS estado_reserva,
 
-            u.nombres AS cliente_nombre,
-            u.apellidos AS cliente_apellido
+        c.nombre AS clase,
+        c.tipo,
+        c.fecha_hora_inicio,
+        c.fecha_hora_fin,
+        c.cupo_disponible,
 
-        FROM reserva r
+        ue.nombres AS entrenador_nombre,
+        ue.apellidos AS entrenador_apellido
 
-        INNER JOIN estado_reserva er
-            ON r.id_estado_reserva = er.idEstadoReserva
+    FROM reserva r
 
-        INNER JOIN claseGym c
-            ON r.id_clase = c.idClase
+    INNER JOIN estado_reserva er
+        ON r.id_estado_reserva =
+        er.idEstadoReserva
 
-        INNER JOIN cliente cl
-            ON r.id_cliente = cl.idCliente
+    INNER JOIN claseGym c
+        ON r.id_clase =
+        c.idClase
 
-        INNER JOIN usuario u
-            ON cl.id_usuario = u.idUsuario
+    INNER JOIN entrenador e
+        ON c.id_entrenador =
+        e.idEntrenador
 
-        WHERE r.id_cliente = ?
-    `,
+    INNER JOIN usuario ue
+        ON e.id_usuario =
+        ue.idUsuario
+
+    WHERE r.id_cliente = ?
+
+`,
     [
         cliente.idCliente
     ]);

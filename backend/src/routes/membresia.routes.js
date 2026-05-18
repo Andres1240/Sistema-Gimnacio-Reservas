@@ -21,11 +21,19 @@ router.get(
 );
 
 router.get(
+    '/mi-membresia',
+    authMiddleware.verifyToken,
+    roleMiddleware.authorizeRoles('CLIENTE'),
+    membresiaController.getMiMembresia
+);
+
+router.get(
     '/:id',
     authMiddleware.verifyToken,
     roleMiddleware.authorizeRoles('ADMINISTRADOR'),
     membresiaController.getMembresiaById
 );
+
 
 router.put(
     '/:id',

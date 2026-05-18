@@ -37,6 +37,15 @@ from './pages/GestionMembresiasPage';
 import GestionPagosPage
 from './pages/GestionPagosPage';
 
+import ClienteReservasPage
+from './pages/ClienteReservasPage';
+
+import MisReservasPage
+from './pages/MisReservasPage';
+
+import MiMembresiaPage
+from './pages/MiMembresiaPage';
+
 function App() {
 
     const { user } =
@@ -150,6 +159,57 @@ function App() {
                         >
 
                             <ClientePage />
+
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/cliente/reservas"
+                    element={
+
+                        <ProtectedRoute
+                            user={user}
+                            allowedRoles={[
+                                'CLIENTE'
+                            ]}
+                        >
+
+                            <ClienteReservasPage />
+
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/cliente/mis-reservas"
+                    element={
+
+                        <ProtectedRoute
+                            user={user}
+                            allowedRoles={[
+                                'CLIENTE'
+                            ]}
+                        >
+
+                            <MisReservasPage />
+
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/cliente/membresia"
+                    element={
+
+                        <ProtectedRoute
+                            user={user}
+                            allowedRoles={[
+                                'CLIENTE'
+                            ]}
+                        >
+
+                            <MiMembresiaPage />
 
                         </ProtectedRoute>
                     }

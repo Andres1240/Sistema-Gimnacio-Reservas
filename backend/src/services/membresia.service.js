@@ -220,6 +220,70 @@ async (id) => {
     return rows[0];
 };
 
+const getMiMembresia =
+async (user) => {
+
+    // Buscar cliente autenticado
+    const [clienteRows] =
+    await pool.query(
+
+        `SELECT *
+         FROM cliente
+         WHERE id_usuario = ?`,
+
+        [user.idUsuario]
+    );
+
+    if (
+        clienteRows.length === 0
+    ) {
+
+        throw new Error(
+            'Cliente no encontrado'
+        );
+    }
+
+    const cliente =
+        clienteRows[0];
+
+
+    // Buscar membresía
+    const [rows] =
+    await pool.query(`
+
+        SELECT
+
+            m.idMembresia,
+            m.tipo,
+            m.fecha_inicio,
+            m.fecha_fin,
+
+            em.nombre
+            AS estado_membresia
+
+        FROM membresia m
+
+        INNER JOIN estado_membresia em
+            ON m.id_estado_membresia =
+            em.idEstadoMembresia
+
+        WHERE m.id_cliente = ?
+
+    `,
+    [
+        cliente.idCliente
+    ]);
+
+    if (rows.length === 0) {
+
+        throw new Error(
+            'El cliente no tiene membresía'
+        );
+    }
+
+    return rows[0];
+};
+
 const updateMembresia =
 async (
     id,
@@ -397,6 +461,7 @@ module.exports = {
     createMembresia,
     getMembresias,
     getMembresiaById,
+    getMiMembresia,
     updateMembresia,
     deleteMembresia
 };
