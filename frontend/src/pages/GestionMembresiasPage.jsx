@@ -307,28 +307,87 @@ function GestionMembresiasPage() {
 
     return (
 
-        <div>
+        <div
 
-            <h1>
-                Gestión de Membresías
-            </h1>
+            style={{
 
-            <button
-                onClick={() =>
-                    navigate('/admin')
-                }
+                minHeight: '100vh',
+
+                backgroundColor:
+                    'var(--light)',
+
+                padding: '40px'
+            }}
+        >
+
+            <h1
+
+                className="
+                    title-custom
+                "
+
+                style={{
+
+                    textAlign: 'center',
+
+                    marginBottom: '30px'
+                }}
             >
 
-                Volver al Panel
+                Gestión de Membresías
 
-            </button>
-
-            <hr />
+            </h1>
 
 
+            <div
+                style={{
+
+                    display: 'flex',
+
+                    justifyContent: 'center',
+
+                    marginBottom: '30px'
+                }}
+            >
+
+                <button
+
+                    onClick={() =>
+                        navigate('/admin')
+                    }
+
+                    className="
+            btn-custom
+        "
+                >
+
+                    Volver al Panel
+
+                </button>
+
+            </div>
+
+
+            {/* ========================= */}
             {/* FORMULARIO */}
+            {/* ========================= */}
 
-            <form onSubmit={handleSubmit}>
+            <form
+
+                onSubmit={handleSubmit}
+
+                className="
+                    card-custom
+                "
+
+                style={{
+
+                    maxWidth: '600px',
+
+                    margin:
+                        '30px auto'
+                }}
+            >
 
                 <input
                     type="text"
@@ -336,6 +395,9 @@ function GestionMembresiasPage() {
                     placeholder="Tipo membresía"
                     value={form.tipo}
                     onChange={handleChange}
+                    className="
+                        input-custom
+                    "
                 />
 
                 <br /><br />
@@ -346,6 +408,9 @@ function GestionMembresiasPage() {
                     name="fecha_inicio"
                     value={form.fecha_inicio}
                     onChange={handleChange}
+                    className="
+                        input-custom
+                    "
                 />
 
                 <br /><br />
@@ -356,6 +421,9 @@ function GestionMembresiasPage() {
                     name="fecha_fin"
                     value={form.fecha_fin}
                     onChange={handleChange}
+                    className="
+                        input-custom
+                    "
                 />
 
                 <br /><br />
@@ -369,6 +437,9 @@ function GestionMembresiasPage() {
                         form.id_estado_membresia
                     }
                     onChange={handleChange}
+                    className="
+                        input-custom
+                    "
                 >
 
                     <option value="">
@@ -400,6 +471,9 @@ function GestionMembresiasPage() {
                         form.id_cliente
                     }
                     onChange={handleChange}
+                    className="
+                        input-custom
+                    "
                 >
 
                     <option value="">
@@ -443,7 +517,19 @@ function GestionMembresiasPage() {
                 <br /><br />
 
 
-                <button type="submit">
+                <button
+
+                    type="submit"
+
+                    className="
+                        btn-custom
+                    "
+
+                    style={{
+
+                        width: '100%'
+                    }}
+                >
 
                     {
 
@@ -463,13 +549,26 @@ function GestionMembresiasPage() {
             </form>
 
 
-            <hr />
-
-
+            {/* ========================= */}
             {/* LISTA */}
+            {/* ========================= */}
 
-            <h2>
+            <h2
+
+                className="
+                    title-custom
+                "
+
+                style={{
+
+                    textAlign: 'center',
+
+                    marginTop: '50px'
+                }}
+            >
+
                 Membresías Registradas
+
             </h2>
 
 
@@ -479,15 +578,35 @@ function GestionMembresiasPage() {
                     (membresia) => (
 
                     <div
+
                         key={
                             membresia.idMembresia
                         }
+
+                        className="
+                            card-custom
+                        "
+
+                        style={{
+
+                            maxWidth: '700px',
+
+                            margin:
+                                '20px auto'
+                        }}
                     >
 
-                        <hr />
+                        <h3
 
-                        <h3>
+                            style={{
+
+                                color:
+                                    'var(--primary-dark)'
+                            }}
+                        >
+
                             {membresia.tipo}
+
                         </h3>
 
                         <p>
@@ -562,11 +681,21 @@ function GestionMembresiasPage() {
 
 
                         <button
+
                             onClick={() =>
                                 handleEdit(
                                     membresia
                                 )
                             }
+
+                            className="
+                                btn-custom
+                            "
+
+                            style={{
+
+                                marginRight: '10px'
+                            }}
                         >
 
                             Editar
@@ -575,11 +704,16 @@ function GestionMembresiasPage() {
 
 
                         <button
+
                             onClick={() =>
                                 handleDelete(
                                     membresia.idMembresia
                                 )
                             }
+
+                            className="
+                                btn-delete
+                            "
                         >
 
                             Eliminar

@@ -102,155 +102,259 @@ function MisReservasPage() {
 
     return (
 
-        <div>
+        <div
+            style={{
+                minHeight: '100vh',
+                backgroundColor: 'var(--light)',
+                padding: '40px'
+            }}
+        >
 
-            <button
-                onClick={() =>
-                    navigate('/cliente')
-                }
+            <div
+                className="card-custom"
+                style={{
+                    maxWidth: '1000px',
+                    margin: '0 auto'
+                }}
             >
 
-                Volver al Panel
+                {/* HEADER */}
 
-            </button>
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '30px',
+                        flexWrap: 'wrap',
+                        gap: '15px'
+                    }}
+                >
 
-            <hr />
+                    <h1
+                        className="title-custom"
+                        style={{
+                            margin: 0
+                        }}
+                    >
+                        Mis Reservas
+                    </h1>
 
-            <h1>
-                Mis Reservas
-            </h1>
-
-
-            {
-
-                reservas.map((reserva) => (
-
-                    <div
-                        key={
-                            reserva.idReserva
+                    <button
+                        onClick={() =>
+                            navigate('/cliente')
                         }
+
+                        className="
+                            btn-custom
+                        "
                     >
 
-                        <hr />
+                        Volver al Panel
 
-                        <h3>
-                            {reserva.clase}
-                        </h3>
+                    </button>
 
-                        <p>
+                </div>
 
-                            <strong>
-                                Tipo:
-                            </strong>
 
-                            {' '}
+                {/* LISTADO */}
 
-                            {reserva.tipo}
+                {
 
-                        </p>
+                    reservas.length === 0
 
-                        <p>
+                    ?
 
-                            <strong>
-                                Inicio:
-                            </strong>
+                    <p
+                        style={{
+                            textAlign: 'center',
+                            color: 'var(--primary)'
+                        }}
+                    >
 
-                            {' '}
+                        No tienes reservas registradas
 
-                            {
+                    </p>
 
-                                new Date(
-                                    reserva.fecha_hora_inicio
-                                ).toLocaleString(
-                                    'es-CO',
-                                    {
-                                        dateStyle:
-                                            'short',
+                    :
 
-                                        timeStyle:
-                                            'short'
-                                    }
-                                )
+                    reservas.map((reserva) => (
+
+                        <div
+                            key={
+                                reserva.idReserva
                             }
 
-                        </p>
+                            className="
+                                card-custom
+                            "
 
-                        <p>
-
-                            <strong>
-                                Fin:
-                            </strong>
-
-                            {' '}
-
-                            {
-
-                                new Date(
-                                    reserva.fecha_hora_fin
-                                ).toLocaleString(
-                                    'es-CO',
-                                    {
-                                        dateStyle:
-                                            'short',
-
-                                        timeStyle:
-                                            'short'
-                                    }
-                                )
-                            }
-
-                        </p>
-
-                        <p>
-
-                            <strong>
-                                Estado:
-                            </strong>
-
-                            {' '}
-
-                            {
-                                reserva.estado_reserva
-                            }
-
-                        </p>
-
-                        <p>
-
-                            <strong>
-                                Entrenador:
-                            </strong>
-
-                            {' '}
-
-                            {
-                                reserva.entrenador_nombre
-                            }
-
-                            {' '}
-
-                            {
-                                reserva.entrenador_apellido
-                            }
-
-                        </p>
-
-
-                        <button
-                            onClick={() =>
-                                handleDelete(
-                                    reserva.idReserva
-                                )
-                            }
+                            style={{
+                                marginBottom: '20px',
+                                border:
+                                    '1px solid var(--secondary)'
+                            }}
                         >
 
-                            Cancelar Reserva
+                            <h3
+                                className="
+                                    title-custom
+                                "
+                            >
 
-                        </button>
+                                {reserva.clase}
 
-                    </div>
-                ))
-            }
+                            </h3>
+
+                            <p>
+
+                                <strong>
+                                    Tipo:
+                                </strong>
+
+                                {' '}
+
+                                {reserva.tipo}
+
+                            </p>
+
+                            <p>
+
+                                <strong>
+                                    Inicio:
+                                </strong>
+
+                                {' '}
+
+                                {
+
+                                    new Date(
+                                        reserva.fecha_hora_inicio
+                                    ).toLocaleString(
+                                        'es-CO',
+                                        {
+                                            dateStyle:
+                                                'short',
+
+                                            timeStyle:
+                                                'short'
+                                        }
+                                    )
+                                }
+
+                            </p>
+
+                            <p>
+
+                                <strong>
+                                    Fin:
+                                </strong>
+
+                                {' '}
+
+                                {
+
+                                    new Date(
+                                        reserva.fecha_hora_fin
+                                    ).toLocaleString(
+                                        'es-CO',
+                                        {
+                                            dateStyle:
+                                                'short',
+
+                                            timeStyle:
+                                                'short'
+                                        }
+                                    )
+                                }
+
+                            </p>
+
+                            <p>
+
+                                <strong>
+                                    Estado:
+                                </strong>
+
+                                {' '}
+
+                                {
+                                    reserva.estado_reserva
+                                }
+
+                            </p>
+
+                            <p>
+
+                                <strong>
+                                    Entrenador:
+                                </strong>
+
+                                {' '}
+
+                                {
+                                    reserva.entrenador_nombre
+                                }
+
+                                {' '}
+
+                                {
+                                    reserva.entrenador_apellido
+                                }
+
+                            </p>
+
+
+                            <button
+                                onClick={() =>
+                                    handleDelete(
+                                        reserva.idReserva
+                                    )
+                                }
+
+                                style={{
+                                    backgroundColor:
+                                        '#c0392b',
+
+                                    color:
+                                        'white',
+
+                                    border:
+                                        'none',
+
+                                    padding:
+                                        '10px 18px',
+
+                                    borderRadius:
+                                        '8px',
+
+                                    cursor:
+                                        'pointer',
+
+                                    transition:
+                                        '0.3s'
+                                }}
+
+                                onMouseOver={(e) =>
+                                    e.target.style.backgroundColor =
+                                    '#922b21'
+                                }
+
+                                onMouseOut={(e) =>
+                                    e.target.style.backgroundColor =
+                                    '#c0392b'
+                                }
+                            >
+
+                                Cancelar Reserva
+
+                            </button>
+
+                        </div>
+                    ))
+                }
+
+            </div>
 
         </div>
     );

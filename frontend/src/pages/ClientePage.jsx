@@ -24,12 +24,17 @@ function ClientePage() {
 
     const {
 
-        logout
+        logout,
+        user
 
     } = useContext(
         AuthContext
     );
 
+
+    // =========================
+    // LOGOUT
+    // =========================
 
     const handleLogout = () => {
 
@@ -41,67 +46,182 @@ function ClientePage() {
 
     return (
 
-        <div>
+        <div
+            className="
+                container
+                mt-5
+            "
+        >
 
-            <h1>
-                Panel Cliente
-            </h1>
+            {/* ========================= */}
+            {/* HEADER */}
+            {/* ========================= */}
 
-            <hr />
-
-
-            <button
-                onClick={() =>
-                    navigate(
-                        '/cliente/reservas'
-                    )
-                }
+            <div
+                className="
+                    card-custom
+                    mb-4
+                "
             >
 
-                Reservar Clases
+                <h1
+                    className="
+                        title-custom
+                    "
+                >
 
-            </button>
+                    Panel Cliente
 
-            <br /><br />
+                </h1>
+
+                <hr />
+
+                <h3
+                    style={{
+
+                        color:
+                            'var(--primary)'
+                    }}
+                >
+
+                    Bienvenido,
+
+                    {' '}
+
+                    {user?.nombres}
+
+                    {' '}
+
+                    {user?.apellidos}
+
+                </h3>
+
+                <p>
+
+                    Rol:
+                    {' '}
+
+                    <strong>
+
+                        {user?.rol}
+
+                    </strong>
+
+                </p>
+
+            </div>
 
 
-            <button
-                onClick={() =>
-                    navigate(
-                        '/cliente/mis-reservas'
-                    )
-                }
+            {/* ========================= */}
+            {/* MENÚ */}
+            {/* ========================= */}
+
+            <div
+                className="
+                    card-custom
+                "
             >
 
-                Mis Reservas
+                <h2
+                    className="
+                        mb-4
+                    "
+                >
 
-            </button>
+                    Opciones Disponibles
 
-            <br /><br />
-
-
-            <button
-                onClick={() =>
-                    navigate(
-                        '/cliente/membresia'
-                    )
-                }
-            >
-
-                Mi Membresía
-
-            </button>
-
-            <br /><br />
+                </h2>
 
 
-            <button
-                onClick={handleLogout}
-            >
+                <div
+                    className="
+                        d-grid
+                        gap-3
+                    "
+                >
 
-                Cerrar Sesión
+                    {/* RESERVAR CLASES */}
 
-            </button>
+                    <button
+
+                        onClick={() =>
+                            navigate(
+                                '/cliente/reservas'
+                            )
+                        }
+
+                        className="
+                            btn-custom
+                        "
+                    >
+
+                        Reservar Clases
+
+                    </button>
+
+
+                    {/* MIS RESERVAS */}
+
+                    <button
+
+                        onClick={() =>
+                            navigate(
+                                '/cliente/mis-reservas'
+                            )
+                        }
+
+                        className="
+                            btn-custom
+                        "
+                    >
+
+                        Mis Reservas
+
+                    </button>
+
+
+                    {/* MEMBRESIA */}
+
+                    <button
+
+                        onClick={() =>
+                            navigate(
+                                '/cliente/membresia'
+                            )
+                        }
+
+                        className="
+                            btn-custom
+                        "
+                    >
+
+                        Mi Membresía
+
+                    </button>
+
+                </div>
+
+
+                <hr />
+
+
+                {/* LOGOUT */}
+
+                <button
+
+                    onClick={handleLogout}
+
+                    className="
+                        btn-custom
+                        w-100
+                    "
+                >
+
+                    Cerrar Sesión
+
+                </button>
+
+            </div>
 
         </div>
     );

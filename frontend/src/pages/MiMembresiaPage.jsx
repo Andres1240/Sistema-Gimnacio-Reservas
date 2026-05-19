@@ -69,96 +69,207 @@ function MiMembresiaPage() {
 
     return (
 
-        <div>
+        <div
+            style={{
+                minHeight: '100vh',
+                backgroundColor: 'var(--light)',
+                padding: '40px'
+            }}
+        >
 
-            <button
-                onClick={() =>
-                    navigate('/cliente')
-                }
+            <div
+                className="card-custom"
+                style={{
+                    maxWidth: '800px',
+                    margin: '0 auto'
+                }}
             >
 
-                Volver al Panel
+                {/* HEADER */}
 
-            </button>
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '30px',
+                        flexWrap: 'wrap',
+                        gap: '15px'
+                    }}
+                >
 
-            <hr />
+                    <h1
+                        className="title-custom"
+                        style={{
+                            margin: 0
+                        }}
+                    >
+                        Mi Membresía
+                    </h1>
 
-            <h1>
-                Mi Membresía
-            </h1>
-
-
-            {
-
-                membresia
-                ?
-
-                <div>
-
-                    <h2>
-                        {membresia.tipo}
-                    </h2>
-
-                    <p>
-
-                        <strong>
-                            Fecha inicio:
-                        </strong>
-
-                        {' '}
-
-                        {
-
-                            new Date(
-                                membresia.fecha_inicio
-                            ).toLocaleDateString(
-                                'es-CO'
-                            )
+                    <button
+                        onClick={() =>
+                            navigate('/cliente')
                         }
 
-                    </p>
+                        className="
+                            btn-custom
+                        "
+                    >
 
-                    <p>
+                        Volver al Panel
 
-                        <strong>
-                            Fecha fin:
-                        </strong>
-
-                        {' '}
-
-                        {
-
-                            new Date(
-                                membresia.fecha_fin
-                            ).toLocaleDateString(
-                                'es-CO'
-                            )
-                        }
-
-                    </p>
-
-                    <p>
-
-                        <strong>
-                            Estado:
-                        </strong>
-
-                        {' '}
-
-                        {
-                            membresia.estado_membresia
-                        }
-
-                    </p>
+                    </button>
 
                 </div>
 
-                :
 
-                <p>
-                    No tienes membresía registrada
-                </p>
-            }
+                {
+
+                    membresia
+                    ?
+
+                    <div
+                        className="
+                            card-custom
+                        "
+
+                        style={{
+                            border:
+                                '1px solid var(--secondary)'
+                        }}
+                    >
+
+                        <h2
+                            className="
+                                title-custom
+                            "
+
+                            style={{
+                                marginBottom: '20px'
+                            }}
+                        >
+
+                            {membresia.tipo}
+
+                        </h2>
+
+                        <p>
+
+                            <strong>
+                                Fecha inicio:
+                            </strong>
+
+                            {' '}
+
+                            {
+
+                                new Date(
+                                    membresia.fecha_inicio
+                                ).toLocaleDateString(
+                                    'es-CO'
+                                )
+                            }
+
+                        </p>
+
+                        <p>
+
+                            <strong>
+                                Fecha fin:
+                            </strong>
+
+                            {' '}
+
+                            {
+
+                                new Date(
+                                    membresia.fecha_fin
+                                ).toLocaleDateString(
+                                    'es-CO'
+                                )
+                            }
+
+                        </p>
+
+                        <p>
+
+                            <strong>
+                                Estado:
+                            </strong>
+
+                            {' '}
+
+                            <span
+                                style={{
+
+                                    backgroundColor:
+
+                                        membresia.estado_membresia
+                                        ===
+                                        'Activa'
+
+                                        ?
+
+                                        '#27ae60'
+
+                                        :
+
+                                        '#c0392b',
+
+                                    color:
+                                        'white',
+
+                                    padding:
+                                        '6px 12px',
+
+                                    borderRadius:
+                                        '20px',
+
+                                    fontSize:
+                                        '14px'
+                                }}
+                            >
+
+                                {
+                                    membresia.estado_membresia
+                                }
+
+                            </span>
+
+                        </p>
+
+                    </div>
+
+                    :
+
+                    <div
+                        className="
+                            card-custom
+                        "
+
+                        style={{
+                            textAlign: 'center'
+                        }}
+                    >
+
+                        <p
+                            style={{
+                                color:
+                                    'var(--primary)',
+                                fontSize:
+                                    '18px'
+                            }}
+                        >
+
+                            No tienes membresía registrada
+
+                        </p>
+
+                    </div>
+                }
+
+            </div>
 
         </div>
     );

@@ -25,12 +25,17 @@ function AdminPage() {
 
     const {
 
-        logout
+        logout,
+        user
 
     } = useContext(
         AuthContext
     );
 
+
+    // =========================
+    // LOGOUT
+    // =========================
 
     const handleLogout = () => {
 
@@ -42,84 +47,189 @@ function AdminPage() {
 
     return (
 
-        <div>
+        <div
+            className="
+                container
+                mt-5
+            "
+        >
 
-            <h1>
-                Panel Administrador
-            </h1>
+            {/* ========================= */}
+            {/* HEADER */}
+            {/* ========================= */}
 
-            <hr />
+            <div
+                className="
+                    card-custom
+                    mb-4
+                "
+            >
+
+                <h1
+                    className="
+                        title-custom
+                    "
+                >
+
+                    Panel Administrador
+
+                </h1>
+
+                <hr />
+
+                <h3
+                    style={{
+
+                        color:
+                            'var(--primary)'
+                    }}
+                >
+
+                    Bienvenido,
+
+                    {' '}
+
+                    {user?.nombres}
+
+                    {' '}
+
+                    {user?.apellidos}
+
+                </h3>
+
+                <p>
+
+                    Rol:
+                    {' '}
+
+                    <strong>
+
+                        {user?.rol}
+
+                    </strong>
+
+                </p>
+
+            </div>
 
 
-            <h2>
-                Módulos del Sistema
-            </h2>
+            {/* ========================= */}
+            {/* MODULOS */}
+            {/* ========================= */}
+
+            <div
+                className="
+                    card-custom
+                "
+            >
+
+                <h2
+                    className="
+                        mb-4
+                    "
+                >
+
+                    Módulos del Sistema
+
+                </h2>
 
 
-            <ul>
+                <div
+                    className="
+                        d-grid
+                        gap-3
+                    "
+                >
 
-                <li>
+                    {/* CLASES */}
 
-                    <Link to="/admin/clases">
+                    <Link
+                        to="/admin/clases"
+
+                        className="
+                            btn-custom
+                            text-center
+                            text-decoration-none
+                        "
+                    >
 
                         Gestión de Clases
 
                     </Link>
 
-                </li>
 
-
-                <li>
+                    {/* ENTRENADORES */}
 
                     <Link
                         to="/admin/entrenadores"
+
+                        className="
+                            btn-custom
+                            text-center
+                            text-decoration-none
+                        "
                     >
 
                         Gestión de Entrenadores
 
                     </Link>
 
-                </li>
 
-
-                <li>
+                    {/* MEMBRESIAS */}
 
                     <Link
                         to="/admin/membresias"
+
+                        className="
+                            btn-custom
+                            text-center
+                            text-decoration-none
+                        "
                     >
 
                         Gestión de Membresías
 
                     </Link>
 
-                </li>
 
-
-                <li>
+                    {/* PAGOS */}
 
                     <Link
                         to="/admin/pagos"
+
+                        className="
+                            btn-custom
+                            text-center
+                            text-decoration-none
+                        "
                     >
 
                         Gestión de Pagos
 
                     </Link>
 
-                </li>
-
-            </ul>
+                </div>
 
 
-            <hr />
+                <hr />
 
 
-            <button
-                onClick={handleLogout}
-            >
+                {/* LOGOUT */}
 
-                Cerrar Sesión
+                <button
+                    onClick={handleLogout}
 
-            </button>
+                    className="
+                        btn-custom
+                        w-100
+                    "
+                >
+
+                    Cerrar Sesión
+
+                </button>
+
+            </div>
 
         </div>
     );

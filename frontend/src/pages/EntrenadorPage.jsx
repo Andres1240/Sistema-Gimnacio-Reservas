@@ -24,12 +24,17 @@ function EntrenadorPage() {
 
     const {
 
-        logout
+        logout,
+        user
 
     } = useContext(
         AuthContext
     );
 
+
+    // =========================
+    // LOGOUT
+    // =========================
 
     const handleLogout = () => {
 
@@ -41,54 +46,162 @@ function EntrenadorPage() {
 
     return (
 
-        <div>
+        <div
+            className="
+                container
+                mt-5
+            "
+        >
 
-            <h1>
-                Panel Entrenador
-            </h1>
+            {/* ========================= */}
+            {/* HEADER */}
+            {/* ========================= */}
 
-            <hr />
+            <div
+                className="
+                    card-custom
+                    mb-4
+                "
+            >
+
+                <h1
+                    className="
+                        title-custom
+                    "
+                >
+
+                    Panel Entrenador
+
+                </h1>
+
+                <hr />
+
+                <h3
+                    style={{
+
+                        color:
+                            'var(--primary)'
+                    }}
+                >
+
+                    Bienvenido,
+
+                    {' '}
+
+                    {user?.nombres}
+
+                    {' '}
+
+                    {user?.apellidos}
+
+                </h3>
+
+                <p>
+
+                    Rol:
+                    {' '}
+
+                    <strong>
+
+                        {user?.rol}
+
+                    </strong>
+
+                </p>
+
+            </div>
 
 
             {/* ========================= */}
             {/* MENÚ */}
             {/* ========================= */}
 
-            <button
-                onClick={() =>
-                    navigate(
-                        '/entrenador/clases'
-                    )
-                }
+            <div
+                className="
+                    card-custom
+                "
             >
 
-                Mis Clases
+                <h2
+                    className="
+                        mb-4
+                    "
+                >
 
-            </button>
+                    Opciones Disponibles
 
-            <br /><br />
+                </h2>
 
-            <button
-                onClick={() =>
-                    navigate(
-                        '/entrenador/asistencias'
-                    )
-                }
-            >
 
-                Registrar Asistencia
+                <div
+                    className="
+                        d-grid
+                        gap-3
+                    "
+                >
 
-            </button>
+                    {/* MIS CLASES */}
 
-            <br /><br />
+                    <button
 
-            <button
-                onClick={handleLogout}
-            >
+                        onClick={() =>
+                            navigate(
+                                '/entrenador/clases'
+                            )
+                        }
 
-                Cerrar Sesión
+                        className="
+                            btn-custom
+                        "
+                    >
 
-            </button>
+                        Mis Clases
+
+                    </button>
+
+
+                    {/* ASISTENCIAS */}
+
+                    <button
+
+                        onClick={() =>
+                            navigate(
+                                '/entrenador/asistencias'
+                            )
+                        }
+
+                        className="
+                            btn-custom
+                        "
+                    >
+
+                        Registrar Asistencia
+
+                    </button>
+
+                </div>
+
+
+                <hr />
+
+
+                {/* LOGOUT */}
+
+                <button
+
+                    onClick={handleLogout}
+
+                    className="
+                        btn-custom
+                        w-100
+                    "
+                >
+
+                    Cerrar Sesión
+
+                </button>
+
+            </div>
 
         </div>
     );

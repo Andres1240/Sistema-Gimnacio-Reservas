@@ -5,8 +5,11 @@ import {
 
 } from 'react';
 
-import { useNavigate }
-from 'react-router-dom';
+import {
+
+    useNavigate
+
+} from 'react-router-dom';
 
 import {
 
@@ -29,8 +32,9 @@ function GestionClasesPage() {
     // =========================
     // STATES
     // =========================
+
     const navigate =
-    useNavigate();
+        useNavigate();
 
     const [clases, setClases] =
         useState([]);
@@ -52,12 +56,13 @@ function GestionClasesPage() {
             id_entrenador: ''
 
         });
-        
+
     const [editingId, setEditingId] =
-    useState(null);
+        useState(null);
+
 
     // =========================
-    // OBTENER CLASES
+    // LOAD CLASES
     // =========================
 
     const loadClases = async () => {
@@ -77,7 +82,7 @@ function GestionClasesPage() {
 
 
     // =========================
-    // OBTENER ENTRENADORES
+    // LOAD ENTRENADORES
     // =========================
 
     const loadEntrenadores =
@@ -110,7 +115,7 @@ function GestionClasesPage() {
 
 
     // =========================
-    // MANEJAR INPUTS
+    // HANDLE INPUTS
     // =========================
 
     const handleChange = (e) => {
@@ -118,6 +123,7 @@ function GestionClasesPage() {
         setForm({
 
             ...form,
+
             [e.target.name]:
                 e.target.value
 
@@ -126,18 +132,19 @@ function GestionClasesPage() {
 
 
     // =========================
-    // CREAR CLASE
+    // SUBMIT
     // =========================
 
-    const handleSubmit = async (e) => {
+    const handleSubmit =
+    async (e) => {
 
         e.preventDefault();
 
-        // =========================
-        // VALIDAR CAMPOS VACÍOS
-        // =========================
+
+        // VALIDACIONES
 
         if (
+
             !form.nombre ||
             !form.tipo ||
             !form.fecha_hora_inicio ||
@@ -146,6 +153,7 @@ function GestionClasesPage() {
             !form.cupo_disponible ||
             !form.id_estado_clase ||
             !form.id_entrenador
+
         ) {
 
             alert(
@@ -156,13 +164,11 @@ function GestionClasesPage() {
         }
 
 
-        // =========================
-        // VALIDAR NEGATIVOS
-        // =========================
-
         if (
+
             form.aforo < 0 ||
             form.cupo_disponible < 0
+
         ) {
 
             alert(
@@ -173,14 +179,12 @@ function GestionClasesPage() {
         }
 
 
-        // =========================
-        // VALIDAR CUPOS
-        // =========================
-
         if (
+
             Number(form.cupo_disponible)
             >
             Number(form.aforo)
+
         ) {
 
             alert(
@@ -191,14 +195,12 @@ function GestionClasesPage() {
         }
 
 
-        // =========================
-        // VALIDAR FECHAS
-        // =========================
-
         if (
+
             new Date(form.fecha_hora_fin)
             <=
             new Date(form.fecha_hora_inicio)
+
         ) {
 
             alert(
@@ -207,6 +209,7 @@ function GestionClasesPage() {
 
             return;
         }
+
 
         try {
 
@@ -230,12 +233,12 @@ function GestionClasesPage() {
                 );
             }
 
-            // Recargar clases
+
             loadClases();
 
             setEditingId(null);
 
-            // Limpiar formulario
+
             setForm({
 
                 nombre: '',
@@ -254,13 +257,19 @@ function GestionClasesPage() {
             alert(
 
                 error.response?.data?.error
-                || 'Error al crear clase'
-
+                ||
+                'Error al guardar clase'
             );
         }
     };
 
-    const handleDelete = async (id) => {
+
+    // =========================
+    // DELETE
+    // =========================
+
+    const handleDelete =
+    async (id) => {
 
         const confirmar =
             window.confirm(
@@ -280,7 +289,6 @@ function GestionClasesPage() {
                 'Clase eliminada correctamente'
             );
 
-            // Recargar clases
             loadClases();
 
         } catch (error) {
@@ -288,11 +296,16 @@ function GestionClasesPage() {
             alert(
 
                 error.response?.data?.error
-                || 'Error al eliminar clase'
-
+                ||
+                'Error al eliminar clase'
             );
         }
     };
+
+
+    // =========================
+    // EDIT
+    // =========================
 
     const handleEdit = (clase) => {
 
@@ -330,204 +343,79 @@ function GestionClasesPage() {
         });
     };
 
+
     return (
 
-        <div>
+        <div
+            className="
+                container
+                mt-5
+                mb-5
+            "
+        >
 
-            <h1>
-                Gestión de Clases
-            </h1>
+            {/* ========================= */}
+            {/* HEADER */}
+            {/* ========================= */}
 
-            <button
-                onClick={() =>
-                    navigate('/admin')
-                }
+            <div
+                className="
+                    d-flex
+                    justify-content-between
+                    align-items-center
+                    mb-4
+                "
             >
 
-                Volver al Panel
+                <h1
+                    className="
+                        title-custom
+                    "
+                >
 
-            </button>
+                    Gestión de Clases
+
+                </h1>
+
+                <button
+
+                    onClick={() =>
+                        navigate('/admin')
+                    }
+
+                    className="
+                        btn-custom
+                    "
+                >
+
+                    Volver al Panel
+
+                </button>
+
+            </div>
 
 
             {/* ========================= */}
             {/* FORMULARIO */}
             {/* ========================= */}
 
-            <h2>
-                Crear Clase
-            </h2>
+            <div
+                className="
+                    card-custom
+                    mb-5
+                "
+            >
 
-            <form onSubmit={handleSubmit}>
-
-                {/* Nombre */}
-
-                <input
-                    type="text"
-                    name="nombre"
-                    placeholder="Nombre"
-                    value={form.nombre}
-                    onChange={handleChange}
-                />
-
-                <br /><br />
-
-
-                {/* Tipo */}
-
-                <input
-                    type="text"
-                    name="tipo"
-                    placeholder="Tipo"
-                    value={form.tipo}
-                    onChange={handleChange}
-                />
-
-                <br /><br />
-
-
-                {/* Fecha inicio */}
-
-                <input
-                    type="datetime-local"
-                    name="fecha_hora_inicio"
-                    value={
-                        form.fecha_hora_inicio
-                    }
-                    onChange={handleChange}
-                />
-
-                <br /><br />
-
-
-                {/* Fecha fin */}
-
-                <input
-                    type="datetime-local"
-                    name="fecha_hora_fin"
-                    value={
-                        form.fecha_hora_fin
-                    }
-                    onChange={handleChange}
-                />
-
-                <br /><br />
-
-
-                {/* Aforo */}
-
-                <input
-                    type="number"
-                    name="aforo"
-                    placeholder="Aforo"
-                    value={form.aforo}
-                    onChange={handleChange}
-                    min="0"
-                />
-
-                <br /><br />
-
-
-                {/* Cupos */}
-
-                <input
-                    type="number"
-                    name="cupo_disponible"
-                    placeholder="Cupos disponibles"
-                    value={
-                        form.cupo_disponible
-                    }
-                    onChange={handleChange}
-                    min="0"
-                />
-
-                <br /><br />
-
-
-                {/* Estado clase */}
-
-                <select
-                    name="id_estado_clase"
-                    value={
-                        form.id_estado_clase
-                    }
-                    onChange={handleChange}
+                <h2
+                    className="
+                        mb-4
+                    "
                 >
-
-                    <option value="">
-                        Seleccione estado
-                    </option>
-
-                    <option value="1">
-                        Programada
-                    </option>
-
-                    <option value="2">
-                        Finalizada
-                    </option>
-
-                    <option value="3">
-                        Cancelada
-                    </option>
-
-                </select>
-
-                <br /><br />
-
-
-                {/* Entrenador */}
-
-                <select
-                    name="id_entrenador"
-                    value={
-                        form.id_entrenador
-                    }
-                    onChange={handleChange}
-                >
-
-                    <option value="">
-                        Seleccione entrenador
-                    </option>
-
-                    {
-
-                        entrenadores.map(
-                            (entrenador) => (
-
-                                <option
-                                    key={
-                                        entrenador.idEntrenador
-                                    }
-
-                                    value={
-                                        entrenador.idEntrenador
-                                    }
-                                >
-
-                                    {
-                                        entrenador.nombres
-                                    }
-
-                                    {' '}
-
-                                    {
-                                        entrenador.apellidos
-                                    }
-
-                                </option>
-                            )
-                        )
-                    }
-
-                </select>
-
-                <br /><br />
-
-
-                <button type="submit">
 
                     {
 
                         editingId
+
                             ?
 
                             'Actualizar Clase'
@@ -538,155 +426,533 @@ function GestionClasesPage() {
 
                     }
 
-                </button>
-
-            </form>
+                </h2>
 
 
-            <hr />
-
-
-            {/* ========================= */}
-            {/* LISTADO CLASES */}
-            {/* ========================= */}
-
-            <h2>
-                Clases Registradas
-            </h2>
-
-            {
-
-                clases.map((clase) => (
+                <form
+                    onSubmit={handleSubmit}
+                >
 
                     <div
-                        key={clase.idClase}
+                        className="
+                            row
+                        "
                     >
 
-                        <hr />
+                        {/* NOMBRE */}
 
-                        <h3>
-                            {clase.nombre}
-                        </h3>
-
-                        <p>
-                            <strong>
-                                Tipo:
-                            </strong>
-
-                            {' '}
-
-                            {clase.tipo}
-                        </p>
-
-                        <p>
-                            <strong>
-                                Inicio:
-                            </strong>
-
-                            {' '}
-
-                            {
-                                new Date(
-                                    clase.fecha_hora_inicio
-                                ).toLocaleString(
-                                    'es-CO',
-                                    {
-                                        dateStyle: 'short',
-                                        timeStyle: 'short'
-                                    }
-                                )
-                            }
-                        </p>
-
-                        <p>
-                            <strong>
-                                Fin:
-                            </strong>
-
-                            {' '}
-
-                            {
-                                new Date(
-                                    clase.fecha_hora_fin
-                                ).toLocaleString(
-                                    'es-CO',
-                                    {
-                                        dateStyle: 'short',
-                                        timeStyle: 'short'
-                                    }
-                                )
-                            }
-                        </p>
-
-                        <p>
-                            <strong>
-                                Cupos:
-                            </strong>
-
-                            {' '}
-
-                            {
-                                clase.cupo_disponible
-                            }
-
-                            /
-
-                            {
-                                clase.aforo
-                            }
-                        </p>
-
-                        <p>
-                            <strong>
-                                Estado:
-                            </strong>
-
-                            {' '}
-
-                            {
-                                clase.estado_clase
-                            }
-                        </p>
-
-                        <p>
-                            <strong>
-                                Entrenador:
-                            </strong>
-
-                            {' '}
-
-                            {
-                                clase.entrenador_nombre
-                            }
-
-                            {' '}
-
-                            {
-                                clase.entrenador_apellido
-                            }
-                        </p>
-                        <button
-                            onClick={() =>
-                                handleDelete(clase.idClase)
-                            }
+                        <div
+                            className="
+                                col-md-6
+                                mb-3
+                            "
                         >
 
-                            Eliminar
+                            <label>
+                                Nombre
+                            </label>
 
-                        </button>
-                        <button
-                            onClick={() =>
-                                handleEdit(clase)
-                            }
+                            <input
+                                type="text"
+                                name="nombre"
+                                value={form.nombre}
+                                onChange={handleChange}
+                                className="
+                                    input-custom
+                                "
+                            />
+
+                        </div>
+
+
+                        {/* TIPO */}
+
+                        <div
+                            className="
+                                col-md-6
+                                mb-3
+                            "
                         >
 
-                            Editar
+                            <label>
+                                Tipo
+                            </label>
 
-                        </button>
+                            <input
+                                type="text"
+                                name="tipo"
+                                value={form.tipo}
+                                onChange={handleChange}
+                                className="
+                                    input-custom
+                                "
+                            />
+
+                        </div>
+
+
+                        {/* FECHA INICIO */}
+
+                        <div
+                            className="
+                                col-md-6
+                                mb-3
+                            "
+                        >
+
+                            <label>
+                                Fecha Inicio
+                            </label>
+
+                            <input
+                                type="datetime-local"
+                                name="fecha_hora_inicio"
+                                value={
+                                    form.fecha_hora_inicio
+                                }
+                                onChange={handleChange}
+                                className="
+                                    input-custom
+                                "
+                            />
+
+                        </div>
+
+
+                        {/* FECHA FIN */}
+
+                        <div
+                            className="
+                                col-md-6
+                                mb-3
+                            "
+                        >
+
+                            <label>
+                                Fecha Fin
+                            </label>
+
+                            <input
+                                type="datetime-local"
+                                name="fecha_hora_fin"
+                                value={
+                                    form.fecha_hora_fin
+                                }
+                                onChange={handleChange}
+                                className="
+                                    input-custom
+                                "
+                            />
+
+                        </div>
+
+
+                        {/* AFORO */}
+
+                        <div
+                            className="
+                                col-md-6
+                                mb-3
+                            "
+                        >
+
+                            <label>
+                                Aforo
+                            </label>
+
+                            <input
+                                type="number"
+                                name="aforo"
+                                value={form.aforo}
+                                onChange={handleChange}
+                                min="0"
+                                className="
+                                    input-custom
+                                "
+                            />
+
+                        </div>
+
+
+                        {/* CUPOS */}
+
+                        <div
+                            className="
+                                col-md-6
+                                mb-3
+                            "
+                        >
+
+                            <label>
+                                Cupos Disponibles
+                            </label>
+
+                            <input
+                                type="number"
+                                name="cupo_disponible"
+                                value={
+                                    form.cupo_disponible
+                                }
+                                onChange={handleChange}
+                                min="0"
+                                className="
+                                    input-custom
+                                "
+                            />
+
+                        </div>
+
+
+                        {/* ESTADO */}
+
+                        <div
+                            className="
+                                col-md-6
+                                mb-3
+                            "
+                        >
+
+                            <label>
+                                Estado
+                            </label>
+
+                            <select
+                                name="id_estado_clase"
+                                value={
+                                    form.id_estado_clase
+                                }
+                                onChange={handleChange}
+                                className="
+                                    input-custom
+                                "
+                            >
+
+                                <option value="">
+                                    Seleccione estado
+                                </option>
+
+                                <option value="1">
+                                    Programada
+                                </option>
+
+                                <option value="2">
+                                    Finalizada
+                                </option>
+
+                                <option value="3">
+                                    Cancelada
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        {/* ENTRENADOR */}
+
+                        <div
+                            className="
+                                col-md-6
+                                mb-3
+                            "
+                        >
+
+                            <label>
+                                Entrenador
+                            </label>
+
+                            <select
+                                name="id_entrenador"
+                                value={
+                                    form.id_entrenador
+                                }
+                                onChange={handleChange}
+                                className="
+                                    input-custom
+                                "
+                            >
+
+                                <option value="">
+                                    Seleccione entrenador
+                                </option>
+
+                                {
+
+                                    entrenadores.map(
+                                        (entrenador) => (
+
+                                            <option
+                                                key={
+                                                    entrenador.idEntrenador
+                                                }
+
+                                                value={
+                                                    entrenador.idEntrenador
+                                                }
+                                            >
+
+                                                {
+                                                    entrenador.nombres
+                                                }
+
+                                                {' '}
+
+                                                {
+                                                    entrenador.apellidos
+                                                }
+
+                                            </option>
+                                        )
+                                    )
+                                }
+
+                            </select>
+
+                        </div>
 
                     </div>
-                ))
-            }
+
+
+                    <button
+                        type="submit"
+                        className="
+                            btn-custom
+                            mt-3
+                        "
+                    >
+
+                        {
+
+                            editingId
+
+                                ?
+
+                                'Actualizar Clase'
+
+                                :
+
+                                'Crear Clase'
+                        }
+
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            {/* ========================= */}
+            {/* LISTADO */}
+            {/* ========================= */}
+
+            <h2
+                className="
+                    mb-4
+                "
+            >
+
+                Clases Registradas
+
+            </h2>
+
+
+            <div
+                className="
+                    row
+                "
+            >
+
+                {
+
+                    clases.map((clase) => (
+
+                        <div
+                            key={clase.idClase}
+
+                            className="
+                                col-md-6
+                                mb-4
+                            "
+                        >
+
+                            <div
+                                className="
+                                    card-custom
+                                    h-100
+                                "
+                            >
+
+                                <h3>
+
+                                    {clase.nombre}
+
+                                </h3>
+
+                                <p>
+
+                                    <strong>
+                                        Tipo:
+                                    </strong>
+
+                                    {' '}
+
+                                    {clase.tipo}
+
+                                </p>
+
+                                <p>
+
+                                    <strong>
+                                        Inicio:
+                                    </strong>
+
+                                    {' '}
+
+                                    {
+
+                                        new Date(
+                                            clase.fecha_hora_inicio
+                                        ).toLocaleString(
+                                            'es-CO',
+                                            {
+                                                dateStyle: 'short',
+                                                timeStyle: 'short'
+                                            }
+                                        )
+                                    }
+
+                                </p>
+
+                                <p>
+
+                                    <strong>
+                                        Fin:
+                                    </strong>
+
+                                    {' '}
+
+                                    {
+
+                                        new Date(
+                                            clase.fecha_hora_fin
+                                        ).toLocaleString(
+                                            'es-CO',
+                                            {
+                                                dateStyle: 'short',
+                                                timeStyle: 'short'
+                                            }
+                                        )
+                                    }
+
+                                </p>
+
+                                <p>
+
+                                    <strong>
+                                        Cupos:
+                                    </strong>
+
+                                    {' '}
+
+                                    {
+                                        clase.cupo_disponible
+                                    }
+
+                                    /
+
+                                    {
+                                        clase.aforo
+                                    }
+
+                                </p>
+
+                                <p>
+
+                                    <strong>
+                                        Estado:
+                                    </strong>
+
+                                    {' '}
+
+                                    {
+                                        clase.estado_clase
+                                    }
+
+                                </p>
+
+                                <p>
+
+                                    <strong>
+                                        Entrenador:
+                                    </strong>
+
+                                    {' '}
+
+                                    {
+                                        clase.entrenador_nombre
+                                    }
+
+                                    {' '}
+
+                                    {
+                                        clase.entrenador_apellido
+                                    }
+
+                                </p>
+
+
+                                <div
+                                    className="
+                                        d-flex
+                                        gap-2
+                                        mt-3
+                                    "
+                                >
+
+                                    <button
+
+                                        onClick={() =>
+                                            handleEdit(clase)
+                                        }
+
+                                        className="
+                                            btn-custom
+                                            w-50
+                                        "
+                                    >
+
+                                        Editar
+
+                                    </button>
+
+
+                                    <button
+
+                                        onClick={() =>
+                                            handleDelete(
+                                                clase.idClase
+                                            )
+                                        }
+
+                                        className="
+                                            btn-custom
+                                            w-50
+                                        "
+                                    >
+
+                                        Eliminar
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    ))
+                }
+
+            </div>
 
         </div>
     );

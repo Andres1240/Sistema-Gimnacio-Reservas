@@ -69,25 +69,56 @@ function MisClasesEntrenadorPage() {
 
     return (
 
-        <div>
+        <div
+            style={{
 
-            <button
-                onClick={() =>
-                    navigate(
-                        '/entrenador'
-                    )
-                }
+                minHeight: '100vh',
+                backgroundColor: 'var(--light)',
+                padding: '40px'
+            }}
+        >
+
+            {/* HEADER */}
+
+            <div
+                style={{
+
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: '30px'
+                }}
             >
 
-                Volver al Panel
+                <h1
+                    className="title-custom"
+                    style={{
 
-            </button>
+                        margin: 0
+                    }}
+                >
 
-            <hr />
+                    Mis Clases
 
-            <h1>
-                Mis Clases
-            </h1>
+                </h1>
+
+                <button
+                    onClick={() =>
+                        navigate(
+                            '/entrenador'
+                        )
+                    }
+
+                    className="
+                        btn-custom
+                    "
+                >
+
+                    Volver al Panel
+
+                </button>
+
+            </div>
 
 
             {
@@ -96,120 +127,187 @@ function MisClasesEntrenadorPage() {
 
                 ?
 
-                <p>
-                    No tienes clases asignadas
-                </p>
+                <div
+                    className="
+                        card-custom
+                    "
+
+                    style={{
+
+                        textAlign: 'center'
+                    }}
+                >
+
+                    <p>
+
+                        No tienes clases asignadas
+
+                    </p>
+
+                </div>
 
                 :
 
-                clases.map((clase) => (
+                <div
+                    style={{
 
-                    <div
-                        key={
-                            clase.idClase
-                        }
-                    >
+                        display: 'grid',
 
-                        <hr />
+                        gridTemplateColumns:
+                            'repeat(auto-fit, minmax(320px, 1fr))',
 
-                        <h2>
-                            {clase.nombre}
-                        </h2>
+                        gap: '20px'
+                    }}
+                >
 
-                        <p>
+                    {
 
-                            <strong>
-                                Tipo:
-                            </strong>
+                        clases.map((clase) => (
 
-                            {' '}
+                            <div
+                                key={
+                                    clase.idClase
+                                }
 
-                            {clase.tipo}
+                                className="
+                                    card-custom
+                                "
+                            >
 
-                        </p>
+                                <h2
+                                    className="
+                                        title-custom
+                                    "
 
-                        <p>
+                                    style={{
 
-                            <strong>
-                                Inicio:
-                            </strong>
+                                        marginTop: 0
+                                    }}
+                                >
 
-                            {' '}
+                                    {clase.nombre}
 
-                            {
+                                </h2>
 
-                                new Date(
-                                    clase.fecha_hora_inicio
-                                ).toLocaleString(
-                                    'es-CO',
+                                <p>
+
+                                    <strong>
+                                        Tipo:
+                                    </strong>
+
+                                    {' '}
+
+                                    {clase.tipo}
+
+                                </p>
+
+                                <p>
+
+                                    <strong>
+                                        Inicio:
+                                    </strong>
+
+                                    {' '}
+
                                     {
-                                        dateStyle: 'short',
-                                        timeStyle: 'short'
+
+                                        new Date(
+                                            clase.fecha_hora_inicio
+                                        ).toLocaleString(
+                                            'es-CO',
+                                            {
+                                                dateStyle: 'short',
+                                                timeStyle: 'short'
+                                            }
+                                        )
                                     }
-                                )
-                            }
 
-                        </p>
+                                </p>
 
-                        <p>
+                                <p>
 
-                            <strong>
-                                Fin:
-                            </strong>
+                                    <strong>
+                                        Fin:
+                                    </strong>
 
-                            {' '}
+                                    {' '}
 
-                            {
-
-                                new Date(
-                                    clase.fecha_hora_fin
-                                ).toLocaleString(
-                                    'es-CO',
                                     {
-                                        dateStyle: 'short',
-                                        timeStyle: 'short'
+
+                                        new Date(
+                                            clase.fecha_hora_fin
+                                        ).toLocaleString(
+                                            'es-CO',
+                                            {
+                                                dateStyle: 'short',
+                                                timeStyle: 'short'
+                                            }
+                                        )
                                     }
-                                )
-                            }
 
-                        </p>
+                                </p>
 
-                        <p>
+                                <p>
 
-                            <strong>
-                                Cupos:
-                            </strong>
+                                    <strong>
+                                        Cupos:
+                                    </strong>
 
-                            {' '}
+                                    {' '}
 
-                            {
-                                clase.cupo_disponible
-                            }
+                                    {
+                                        clase.cupo_disponible
+                                    }
 
-                            /
+                                    /
 
-                            {
-                                clase.aforo
-                            }
+                                    {
+                                        clase.aforo
+                                    }
 
-                        </p>
+                                </p>
 
-                        <p>
+                                <p>
 
-                            <strong>
-                                Estado:
-                            </strong>
+                                    <strong>
+                                        Estado:
+                                    </strong>
 
-                            {' '}
+                                    {' '}
 
-                            {
-                                clase.estado_clase
-                            }
+                                    <span
+                                        style={{
 
-                        </p>
+                                            color:
+                                                clase.estado_clase ===
+                                                'Programada'
 
-                    </div>
-                ))
+                                                ?
+
+                                                'green'
+
+                                                :
+
+                                                'red',
+
+                                            fontWeight:
+                                                'bold'
+                                        }}
+                                    >
+
+                                        {
+                                            clase.estado_clase
+                                        }
+
+                                    </span>
+
+                                </p>
+
+                            </div>
+                        ))
+                    }
+
+                </div>
             }
 
         </div>

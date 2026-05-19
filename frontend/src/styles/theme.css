@@ -74,6 +74,40 @@ body {
         0.3s;
 }
 
+/* ========================= */
+/* BOTON ELIMINAR */
+/* ========================= */
+
+.btn-delete {
+
+    background-color:
+        #D62828;
+
+    color:
+        var(--white);
+
+    border:
+        none;
+
+    padding:
+        10px 20px;
+
+    border-radius:
+        8px;
+
+    cursor:
+        pointer;
+
+    transition:
+        0.3s;
+}
+
+.btn-delete:hover {
+
+    background-color:
+        #BA181B;
+}
+
 .btn-custom:hover {
 
     background-color:

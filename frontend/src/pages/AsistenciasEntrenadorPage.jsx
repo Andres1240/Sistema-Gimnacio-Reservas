@@ -161,172 +161,295 @@ function AsistenciasEntrenadorPage() {
 
     return (
 
-        <div>
+        <div
+            style={{
+                minHeight: '100vh',
+                backgroundColor: 'var(--light)',
+                padding: '40px'
+            }}
+        >
 
-            <button
-                onClick={() =>
-                    navigate(
-                        '/entrenador'
-                    )
-                }
+            <div
+                className="card-custom"
+                style={{
+                    maxWidth: '1000px',
+                    margin: '0 auto'
+                }}
             >
 
-                Volver al Panel
+                {/* HEADER */}
 
-            </button>
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '30px',
+                        flexWrap: 'wrap',
+                        gap: '15px'
+                    }}
+                >
 
-            <hr />
+                    <h1
+                        className="title-custom"
+                        style={{
+                            margin: 0
+                        }}
+                    >
+                        Registrar Asistencia
+                    </h1>
 
-            <h1>
-                Registrar Asistencia
-            </h1>
+                    <button
+                        onClick={() =>
+                            navigate(
+                                '/entrenador'
+                            )
+                        }
+                        className="
+                            btn-custom
+                        "
+                    >
+
+                        Volver al Panel
+
+                    </button>
+
+                </div>
 
 
-            {/* ========================= */}
-            {/* SELECT CLASE */}
-            {/* ========================= */}
+                {/* SELECT CLASE */}
 
-            <select
-                value={idClase}
-                onChange={
-                    handleClaseChange
-                }
-            >
+                <div
+                    style={{
+                        marginBottom: '30px'
+                    }}
+                >
 
-                <option value="">
-                    Seleccione clase
-                </option>
+                    <label
+                        style={{
+                            fontWeight: 'bold',
+                            display: 'block',
+                            marginBottom: '10px'
+                        }}
+                    >
+
+                        Seleccione una clase
+
+                    </label>
+
+                    <select
+                        value={idClase}
+                        onChange={
+                            handleClaseChange
+                        }
+                        className="
+                            input-custom
+                        "
+                    >
+
+                        <option value="">
+                            Seleccione clase
+                        </option>
+
+                        {
+
+                            clases.map((clase) => (
+
+                                <option
+                                    key={
+                                        clase.idClase
+                                    }
+
+                                    value={
+                                        clase.idClase
+                                    }
+                                >
+
+                                    {
+                                        clase.nombre
+                                    }
+
+                                </option>
+                            ))
+                        }
+
+                    </select>
+
+                </div>
+
+
+                {/* LISTADO */}
 
                 {
 
-                    clases.map((clase) => (
+                    asistentes.length === 0
+                    && idClase && (
 
-                        <option
-                            key={
-                                clase.idClase
-                            }
-
-                            value={
-                                clase.idClase
-                            }
+                        <p
+                            style={{
+                                textAlign: 'center',
+                                color: 'var(--primary)'
+                            }}
                         >
 
-                            {
-                                clase.nombre
-                            }
+                            No hay asistentes registrados
 
-                        </option>
-                    ))
+                        </p>
+                    )
                 }
 
-            </select>
+                {
 
+                    asistentes.map(
+                        (asistente) => (
 
-            <hr />
-
-
-            {/* ========================= */}
-            {/* LISTADO */}
-            {/* ========================= */}
-
-            {
-
-                asistentes.map(
-                    (asistente) => (
-
-                        <div
-                            key={
-                                asistente.idCliente
-                            }
-                        >
-
-                            <hr />
-
-                            <h3>
-
-                                {
-                                    asistente.nombres
+                            <div
+                                key={
+                                    asistente.idCliente
                                 }
 
-                                {' '}
+                                className="
+                                    card-custom
+                                "
 
-                                {
-                                    asistente.apellidos
-                                }
+                                style={{
+                                    marginBottom: '20px',
+                                    border:
+                                        '1px solid var(--secondary)'
+                                }}
+                            >
 
-                            </h3>
+                                <h3
+                                    className="
+                                        title-custom
+                                    "
+                                >
 
-
-                            {
-
-                                asistente.estado_asistencia
-
-                                ?
-
-                                <p>
-
-                                    <strong>
-                                        Estado:
-                                    </strong>
+                                    {
+                                        asistente.nombres
+                                    }
 
                                     {' '}
 
                                     {
-                                        asistente.estado_asistencia
+                                        asistente.apellidos
                                     }
 
-                                </p>
+                                </h3>
 
-                                :
 
-                                <div>
+                                {
 
-                                    <button
-                                        onClick={() =>
-                                            handleAsistencia(
-                                                asistente.idCliente,
-                                                1
-                                            )
-                                        }
+                                    asistente.estado_asistencia
+
+                                    ?
+
+                                    <p>
+
+                                        <strong>
+                                            Estado:
+                                        </strong>
+
+                                        {' '}
+
+                                        <span
+                                            style={{
+                                                color:
+                                                    'var(--accent)',
+                                                fontWeight:
+                                                    'bold'
+                                            }}
+                                        >
+
+                                            {
+                                                asistente.estado_asistencia
+                                            }
+
+                                        </span>
+
+                                    </p>
+
+                                    :
+
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            gap: '10px',
+                                            flexWrap: 'wrap',
+                                            marginTop: '15px'
+                                        }}
                                     >
 
-                                        Asistió
+                                        <button
+                                            onClick={() =>
+                                                handleAsistencia(
+                                                    asistente.idCliente,
+                                                    1
+                                                )
+                                            }
 
-                                    </button>
+                                            className="
+                                                btn-custom
+                                            "
+                                        >
 
-                                    <button
-                                        onClick={() =>
-                                            handleAsistencia(
-                                                asistente.idCliente,
-                                                2
-                                            )
-                                        }
-                                    >
+                                            Asistió
 
-                                        Ausente
+                                        </button>
 
-                                    </button>
+                                        <button
+                                            onClick={() =>
+                                                handleAsistencia(
+                                                    asistente.idCliente,
+                                                    2
+                                                )
+                                            }
 
-                                    <button
-                                        onClick={() =>
-                                            handleAsistencia(
-                                                asistente.idCliente,
-                                                3
-                                            )
-                                        }
-                                    >
+                                            className="
+                                                btn-custom
+                                            "
 
-                                        Justificado
+                                            style={{
+                                                backgroundColor:
+                                                    '#c0392b'
+                                            }}
+                                        >
 
-                                    </button>
+                                            Ausente
 
-                                </div>
-                            }
+                                        </button>
 
-                        </div>
+                                        <button
+                                            onClick={() =>
+                                                handleAsistencia(
+                                                    asistente.idCliente,
+                                                    3
+                                                )
+                                            }
+
+                                            className="
+                                                btn-custom
+                                            "
+
+                                            style={{
+                                                backgroundColor:
+                                                    'var(--accent)'
+                                            }}
+                                        >
+
+                                            Justificado
+
+                                        </button>
+
+                                    </div>
+                                }
+
+                            </div>
+                        )
                     )
-                )
-            }
+                }
+
+            </div>
 
         </div>
     );

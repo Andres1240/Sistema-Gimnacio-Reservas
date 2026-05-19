@@ -115,163 +115,237 @@ function ClienteReservasPage() {
 
     return (
 
-        <div>
+        <div
+            style={{
+                minHeight: '100vh',
+                backgroundColor: 'var(--light)',
+                padding: '40px'
+            }}
+        >
 
-            <button
-                onClick={() =>
-                    navigate(
-                        '/cliente'
-                    )
-                }
+            <div
+                className="card-custom"
+                style={{
+                    maxWidth: '1000px',
+                    margin: '0 auto'
+                }}
             >
 
-                Volver al Panel
+                {/* HEADER */}
 
-            </button>
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '30px',
+                        flexWrap: 'wrap',
+                        gap: '15px'
+                    }}
+                >
 
-            <hr />
+                    <h1
+                        className="title-custom"
+                        style={{
+                            margin: 0
+                        }}
+                    >
+                        Reservar Clases
+                    </h1>
 
-            <h1>
-                Reservar Clases
-            </h1>
-
-
-            {
-
-                clases.map((clase) => (
-
-                    <div
-                        key={
-                            clase.idClase
+                    <button
+                        onClick={() =>
+                            navigate(
+                                '/cliente'
+                            )
                         }
+                        className="
+                            btn-custom
+                        "
                     >
 
-                        <hr />
+                        Volver al Panel
 
-                        <h3>
-                            {clase.nombre}
-                        </h3>
+                    </button>
 
-                        <p>
+                </div>
 
-                            <strong>
-                                Tipo:
-                            </strong>
 
-                            {' '}
+                {/* LISTADO CLASES */}
 
-                            {clase.tipo}
+                {
 
-                        </p>
+                    clases.length === 0
 
-                        <p>
+                    ?
 
-                            <strong>
-                                Inicio:
-                            </strong>
+                    <p
+                        style={{
+                            textAlign: 'center',
+                            color: 'var(--primary)'
+                        }}
+                    >
 
-                            {' '}
+                        No hay clases disponibles
 
-                            {
+                    </p>
 
-                                new Date(
-                                    clase.fecha_hora_inicio
-                                ).toLocaleString(
-                                    'es-CO',
-                                    {
-                                        dateStyle:
-                                            'short',
+                    :
 
-                                        timeStyle:
-                                            'short'
-                                    }
-                                )
+                    clases.map((clase) => (
+
+                        <div
+                            key={
+                                clase.idClase
                             }
 
-                        </p>
+                            className="
+                                card-custom
+                            "
 
-                        <p>
-
-                            <strong>
-                                Fin:
-                            </strong>
-
-                            {' '}
-
-                            {
-
-                                new Date(
-                                    clase.fecha_hora_fin
-                                ).toLocaleString(
-                                    'es-CO',
-                                    {
-                                        dateStyle:
-                                            'short',
-
-                                        timeStyle:
-                                            'short'
-                                    }
-                                )
-                            }
-
-                        </p>
-
-                        <p>
-
-                            <strong>
-                                Cupos:
-                            </strong>
-
-                            {' '}
-
-                            {
-                                clase.cupo_disponible
-                            }
-
-                            /
-
-                            {
-                                clase.aforo
-                            }
-
-                        </p>
-
-                        <p>
-
-                            <strong>
-                                Entrenador:
-                            </strong>
-
-                            {' '}
-
-                            {
-                                clase.entrenador_nombre
-                            }
-
-                            {' '}
-
-                            {
-                                clase.entrenador_apellido
-                            }
-
-                        </p>
-
-
-                        <button
-                            onClick={() =>
-                                handleReserva(
-                                    clase.idClase
-                                )
-                            }
+                            style={{
+                                marginBottom: '20px',
+                                border:
+                                    '1px solid var(--secondary)'
+                            }}
                         >
 
-                            Reservar
+                            <h3
+                                className="
+                                    title-custom
+                                "
+                            >
 
-                        </button>
+                                {clase.nombre}
 
-                    </div>
-                ))
-            }
+                            </h3>
+
+                            <p>
+
+                                <strong>
+                                    Tipo:
+                                </strong>
+
+                                {' '}
+
+                                {clase.tipo}
+
+                            </p>
+
+                            <p>
+
+                                <strong>
+                                    Inicio:
+                                </strong>
+
+                                {' '}
+
+                                {
+
+                                    new Date(
+                                        clase.fecha_hora_inicio
+                                    ).toLocaleString(
+                                        'es-CO',
+                                        {
+                                            dateStyle:
+                                                'short',
+
+                                            timeStyle:
+                                                'short'
+                                        }
+                                    )
+                                }
+
+                            </p>
+
+                            <p>
+
+                                <strong>
+                                    Fin:
+                                </strong>
+
+                                {' '}
+
+                                {
+
+                                    new Date(
+                                        clase.fecha_hora_fin
+                                    ).toLocaleString(
+                                        'es-CO',
+                                        {
+                                            dateStyle:
+                                                'short',
+
+                                            timeStyle:
+                                                'short'
+                                        }
+                                    )
+                                }
+
+                            </p>
+
+                            <p>
+
+                                <strong>
+                                    Cupos:
+                                </strong>
+
+                                {' '}
+
+                                {
+                                    clase.cupo_disponible
+                                }
+
+                                /
+
+                                {
+                                    clase.aforo
+                                }
+
+                            </p>
+
+                            <p>
+
+                                <strong>
+                                    Entrenador:
+                                </strong>
+
+                                {' '}
+
+                                {
+                                    clase.entrenador_nombre
+                                }
+
+                                {' '}
+
+                                {
+                                    clase.entrenador_apellido
+                                }
+
+                            </p>
+
+
+                            <button
+                                onClick={() =>
+                                    handleReserva(
+                                        clase.idClase
+                                    )
+                                }
+
+                                className="
+                                    btn-custom
+                                "
+                            >
+
+                                Reservar
+
+                            </button>
+
+                        </div>
+                    ))
+                }
+
+            </div>
 
         </div>
     );

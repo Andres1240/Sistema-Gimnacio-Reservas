@@ -5,8 +5,11 @@ import {
 
 } from 'react';
 
-import { useNavigate }
-from 'react-router-dom';
+import {
+
+    useNavigate
+
+} from 'react-router-dom';
 
 import {
 
@@ -17,8 +20,6 @@ import {
 
 } from '../services/entrenador.service';
 
-import axios from 'axios';
-
 
 function GestionEntrenadoresPage() {
 
@@ -28,10 +29,8 @@ function GestionEntrenadoresPage() {
     const [entrenadores, setEntrenadores] =
         useState([]);
 
-
     const [editingId, setEditingId] =
         useState(null);
-
 
     const [form, setForm] = useState({
 
@@ -66,11 +65,6 @@ function GestionEntrenadoresPage() {
     };
 
 
-    // =========================
-    // CARGAR ESTADOS
-    // =========================
-
-
     useEffect(() => {
 
         loadEntrenadores();
@@ -103,8 +97,6 @@ function GestionEntrenadoresPage() {
 
         e.preventDefault();
 
-
-        // VALIDACIONES FRONT
 
         if (
             !form.nombres ||
@@ -232,6 +224,11 @@ function GestionEntrenadoresPage() {
             id_estado_entrenador:
                 entrenador.id_estado_entrenador
         });
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     };
 
 
@@ -277,112 +274,82 @@ function GestionEntrenadoresPage() {
 
     return (
 
-        <div>
+        <div
+            style={{
+                minHeight: '100vh',
+                backgroundColor: '#F5F7FA',
+                padding: '40px',
+                fontFamily: 'Arial'
+            }}
+        >
 
-            <h1>
-                Gestión de Entrenadores
-            </h1>
+            {/* HEADER */}
 
-            <button
-                onClick={() =>
-                    navigate('/admin')
-                }
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: '30px'
+                }}
             >
 
-                Volver al Panel
+                <div>
 
-            </button>
+                    <h1
+                        style={{
+                            color: '#0A2647',
+                            marginBottom: '10px'
+                        }}
+                    >
+                        Gestión de Entrenadores
+                    </h1>
 
-            <hr />
+                    <p
+                        style={{
+                            color: '#555'
+                        }}
+                    >
+                        Administra los entrenadores del gimnasio
+                    </p>
 
-
-            <form onSubmit={handleSubmit}>
-
-                <input
-                    type="text"
-                    name="nombres"
-                    placeholder="Nombres"
-                    value={form.nombres}
-                    onChange={handleChange}
-                />
-
-
-                <input
-                    type="text"
-                    name="apellidos"
-                    placeholder="Apellidos"
-                    value={form.apellidos}
-                    onChange={handleChange}
-                />
+                </div>
 
 
-                <input
-                    type="email"
-                    name="correo"
-                    placeholder="Correo"
-                    value={form.correo}
-                    onChange={handleChange}
-                />
-
-
-                {
-
-                    !editingId && (
-
-                        <input
-                            type="password"
-                            name="contraseña"
-                            placeholder="Contraseña"
-                            value={form.contraseña}
-                            onChange={handleChange}
-                        />
-                    )
-                }
-
-
-                <input
-                    type="number"
-                    name="experiencia"
-                    placeholder="Años experiencia"
-                    min="0"
-                    value={form.experiencia}
-                    onChange={handleChange}
-                />
-
-
-                <input
-                    type="text"
-                    name="especialidad"
-                    placeholder="Especialidad"
-                    value={form.especialidad}
-                    onChange={handleChange}
-                />
-
-
-                <select
-                    name="id_estado_entrenador"
-                    value={
-                        form.id_estado_entrenador
+                <button
+                    onClick={() =>
+                        navigate('/admin')
                     }
-                    onChange={handleChange}
+                    className="
+        btn-custom
+    "
                 >
 
-                    <option value="">
-                        Seleccione estado
-                    </option>
+                    Volver al Panel
 
-                    <option value="1">
-                        Activo
-                    </option>
+                </button>
 
-                    <option value="2">
-                        Inactivo
-                    </option>
-
-                </select>
+            </div>
 
 
-                <button type="submit">
+            {/* FORMULARIO */}
+
+            <div
+                style={{
+                    backgroundColor: 'white',
+                    padding: '30px',
+                    borderRadius: '16px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                    marginBottom: '40px'
+                }}
+            >
+
+                <h2
+                    style={{
+                        color: '#0A2647',
+                        marginBottom: '25px'
+                    }}
+                >
 
                     {
 
@@ -394,108 +361,298 @@ function GestionEntrenadoresPage() {
 
                         :
 
-                        'Crear Entrenador'
+                        'Registrar Entrenador'
+
                     }
 
-                </button>
-
-            </form>
+                </h2>
 
 
-            <hr />
+                <form
+                    onSubmit={handleSubmit}
+                >
+
+                    <div
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns:
+                                'repeat(auto-fit, minmax(250px, 1fr))',
+                            gap: '20px'
+                        }}
+                    >
+
+                        <input
+                            type="text"
+                            name="nombres"
+                            placeholder="Nombres"
+                            value={form.nombres}
+                            onChange={handleChange}
+                            style={inputStyle}
+                        />
 
 
-            <h2>
+                        <input
+                            type="text"
+                            name="apellidos"
+                            placeholder="Apellidos"
+                            value={form.apellidos}
+                            onChange={handleChange}
+                            style={inputStyle}
+                        />
+
+
+                        <input
+                            type="email"
+                            name="correo"
+                            placeholder="Correo"
+                            value={form.correo}
+                            onChange={handleChange}
+                            style={inputStyle}
+                        />
+
+
+                        {
+
+                            !editingId && (
+
+                                <input
+                                    type="password"
+                                    name="contraseña"
+                                    placeholder="Contraseña"
+                                    value={form.contraseña}
+                                    onChange={handleChange}
+                                    style={inputStyle}
+                                />
+                            )
+                        }
+
+
+                        <input
+                            type="number"
+                            name="experiencia"
+                            placeholder="Años experiencia"
+                            min="0"
+                            value={form.experiencia}
+                            onChange={handleChange}
+                            style={inputStyle}
+                        />
+
+
+                        <input
+                            type="text"
+                            name="especialidad"
+                            placeholder="Especialidad"
+                            value={form.especialidad}
+                            onChange={handleChange}
+                            style={inputStyle}
+                        />
+
+
+                        <select
+                            name="id_estado_entrenador"
+                            value={
+                                form.id_estado_entrenador
+                            }
+                            onChange={handleChange}
+                            style={inputStyle}
+                        >
+
+                            <option value="">
+                                Seleccione estado
+                            </option>
+
+                            <option value="1">
+                                Activo
+                            </option>
+
+                            <option value="2">
+                                Inactivo
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        className="btn-custom mt-3"
+                    >
+
+                        {
+
+                            editingId
+
+                                ?
+
+                                'Actualizar Entrenador'
+
+                                :
+
+                                'Crear Entrenador'
+                        }
+
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            {/* LISTADO */}
+
+            <h2
+                style={{
+                    color: '#0A2647',
+                    marginBottom: '20px'
+                }}
+            >
                 Lista de Entrenadores
             </h2>
 
 
-            {
+            <div
+                style={{
+                    display: 'grid',
+                    gridTemplateColumns:
+                        'repeat(auto-fit, minmax(320px, 1fr))',
+                    gap: '25px'
+                }}
+            >
 
-                entrenadores.map(
-                    (entrenador) => (
+                {
 
-                    <div
-                        key={
-                            entrenador.idEntrenador
-                        }
-                    >
+                    entrenadores.map(
+                        (entrenador) => (
 
-                        <h3>
-
-                            {entrenador.nombres}
-
-                            {' '}
-
-                            {entrenador.apellidos}
-
-                        </h3>
-
-                        <p>
-
-                            Correo:
-                            {' '}
-                            {entrenador.correo}
-
-                        </p>
-
-                        <p>
-
-                            Especialidad:
-                            {' '}
-                            {entrenador.especialidad}
-
-                        </p>
-
-                        <p>
-
-                            Experiencia:
-                            {' '}
-                            {entrenador.experiencia}
-                            años
-
-                        </p>
-
-                        <p>
-
-                            Estado:
-                            {' '}
-                            {entrenador.estado_entrenador}
-
-                        </p>
-
-
-                        <button
-                            onClick={() =>
-                                handleEdit(entrenador)
+                        <div
+                            key={
+                                entrenador.idEntrenador
                             }
+                            style={{
+                                backgroundColor: 'white',
+                                borderRadius: '16px',
+                                padding: '25px',
+                                boxShadow:
+                                    '0 4px 12px rgba(0,0,0,0.08)'
+                            }}
                         >
 
-                            Editar
+                            <h3
+                                style={{
+                                    color: '#144272',
+                                    marginBottom: '15px'
+                                }}
+                            >
 
-                        </button>
+                                {entrenador.nombres}
+
+                                {' '}
+
+                                {entrenador.apellidos}
+
+                            </h3>
+
+                            <p>
+                                <strong>
+                                    Correo:
+                                </strong>
+
+                                {' '}
+
+                                {entrenador.correo}
+                            </p>
+
+                            <p>
+                                <strong>
+                                    Especialidad:
+                                </strong>
+
+                                {' '}
+
+                                {entrenador.especialidad}
+                            </p>
+
+                            <p>
+                                <strong>
+                                    Experiencia:
+                                </strong>
+
+                                {' '}
+
+                                {entrenador.experiencia}
+                                años
+                            </p>
+
+                            <p>
+                                <strong>
+                                    Estado:
+                                </strong>
+
+                                {' '}
+
+                                {entrenador.estado_entrenador}
+                            </p>
 
 
-                        <button
-                            onClick={() =>
-                                handleDelete(
-                                    entrenador.idEntrenador
-                                )
-                            }
-                        >
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    gap: '12px',
+                                    marginTop: '20px'
+                                }}
+                            >
 
-                            Eliminar
+                                    <button
+                                        onClick={() =>
+                                            handleEdit(entrenador)
+                                        }
+                                        className="btn-custom"
+                                    >
 
-                        </button>
+                                        Editar
 
-                        <hr />
+                                    </button>
 
-                    </div>
-                ))
-            }
+
+                                    <button
+                                        onClick={() =>
+                                            handleDelete(
+                                                entrenador.idEntrenador
+                                            )
+                                        }
+                                        className="btn-delete"
+                                    >
+
+                                        Eliminar
+
+                                    </button>
+
+                            </div>
+
+                        </div>
+                    ))
+                }
+
+            </div>
 
         </div>
     );
 }
+
+
+// =========================
+// ESTILOS INPUTS
+// =========================
+
+const inputStyle = {
+
+    padding: '14px',
+    borderRadius: '10px',
+    border: '1px solid #ccc',
+    fontSize: '15px',
+    outline: 'none'
+};
+
 
 export default GestionEntrenadoresPage;

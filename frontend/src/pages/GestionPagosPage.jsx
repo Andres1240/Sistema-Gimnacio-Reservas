@@ -292,28 +292,87 @@ function GestionPagosPage() {
 
     return (
 
-        <div>
+        <div
 
-            <h1>
-                Gestión de Pagos
-            </h1>
+            style={{
 
-            <button
-                onClick={() =>
-                    navigate('/admin')
-                }
+                minHeight: '100vh',
+
+                backgroundColor:
+                    'var(--light)',
+
+                padding: '40px'
+            }}
+        >
+
+            <h1
+
+                className="
+                    title-custom
+                "
+
+                style={{
+
+                    textAlign: 'center',
+
+                    marginBottom: '20px'
+                }}
             >
 
-                Volver al Panel
+                Gestión de Pagos
 
-            </button>
-
-            <hr />
+            </h1>
 
 
+            <div
+                style={{
+
+                    display: 'flex',
+
+                    justifyContent: 'center',
+
+                    marginBottom: '30px'
+                }}
+            >
+
+                <button
+
+                    onClick={() =>
+                        navigate('/admin')
+                    }
+
+                    className="
+                        btn-custom
+                    "
+                >
+
+                    Volver al Panel
+
+                </button>
+
+            </div>
+
+
+            {/* ========================= */}
             {/* FORMULARIO */}
+            {/* ========================= */}
 
-            <form onSubmit={handleSubmit}>
+            <form
+
+                onSubmit={handleSubmit}
+
+                className="
+                    card-custom
+                "
+
+                style={{
+
+                    maxWidth: '600px',
+
+                    margin:
+                        '0 auto'
+                }}
+            >
 
 
                 {/* MONTO */}
@@ -325,6 +384,9 @@ function GestionPagosPage() {
                     value={form.monto}
                     onChange={handleChange}
                     min="1"
+                    className="
+                        input-custom
+                    "
                 />
 
                 <br /><br />
@@ -340,6 +402,9 @@ function GestionPagosPage() {
                         form.metodo_pago
                     }
                     onChange={handleChange}
+                    className="
+                        input-custom
+                    "
                 />
 
                 <br /><br />
@@ -353,6 +418,9 @@ function GestionPagosPage() {
                         form.id_cliente
                     }
                     onChange={handleChange}
+                    className="
+                        input-custom
+                    "
                 >
 
                     <option value="">
@@ -401,6 +469,9 @@ function GestionPagosPage() {
                         form.id_membresia
                     }
                     onChange={handleChange}
+                    className="
+                        input-custom
+                    "
                 >
 
                     <option value="">
@@ -441,7 +512,19 @@ function GestionPagosPage() {
                 <br /><br />
 
 
-                <button type="submit">
+                <button
+
+                    type="submit"
+
+                    className="
+                        btn-custom
+                    "
+
+                    style={{
+
+                        width: '100%'
+                    }}
+                >
 
                     Registrar Pago
 
@@ -450,13 +533,26 @@ function GestionPagosPage() {
             </form>
 
 
-            <hr />
-
-
+            {/* ========================= */}
             {/* LISTA PAGOS */}
+            {/* ========================= */}
 
-            <h2>
+            <h2
+
+                className="
+                    title-custom
+                "
+
+                style={{
+
+                    textAlign: 'center',
+
+                    marginTop: '50px'
+                }}
+            >
+
                 Historial de Pagos
+
             </h2>
 
 
@@ -465,10 +561,21 @@ function GestionPagosPage() {
                 pagos.map((pago) => (
 
                     <div
-                        key={pago.idPago}
-                    >
 
-                        <hr />
+                        key={pago.idPago}
+
+                        className="
+                            card-custom
+                        "
+
+                        style={{
+
+                            maxWidth: '700px',
+
+                            margin:
+                                '20px auto'
+                        }}
+                    >
 
                         <p>
 
@@ -551,11 +658,16 @@ function GestionPagosPage() {
 
 
                         <button
+
                             onClick={() =>
                                 handleDelete(
                                     pago.idPago
                                 )
                             }
+
+                            className="
+                                btn-delete
+                            "
                         >
 
                             Eliminar
