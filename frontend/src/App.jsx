@@ -52,6 +52,9 @@ from './pages/MisClasesEntrenadorPage';
 import AsistenciasEntrenadorPage
 from './pages/AsistenciasEntrenadorPage';
 
+import RegisterPage 
+from './pages/RegisterPage';
+
 function App() {
 
     const { user } =
@@ -66,6 +69,11 @@ function App() {
                 <Route
                     path="/"
                     element={<LoginPage />}
+                />
+
+                <Route
+                    path="/register"
+                    element={<RegisterPage />}
                 />
 
                 {/* ADMIN */}

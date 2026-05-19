@@ -251,6 +251,22 @@ function LoginPage() {
 
                     </button>
 
+                    <p
+                        className="text-center mt-3"
+                        style={{ color: 'var(--primary)' }}
+                    >
+                        ¿No tienes cuenta?{' '}
+                        <span
+                            style={{
+                                cursor: 'pointer',
+                                textDecoration: 'underline'
+                            }}
+                            onClick={() => navigate('/register')}
+                        >
+                            Regístrate aquí
+                        </span>
+                    </p>
+
                 </form>
 
             </div>

@@ -12,3 +12,13 @@ export const loginRequest = async (data) => {
 
     return response.data;
 };
+
+//registro de cliente (público)
+export const registerRequest = async (data) => {
+    const response = await axios.post(
+        `${API_URL}/register-client`,
+        data
+    );
+
+    return response.data;
+};

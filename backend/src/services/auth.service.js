@@ -89,7 +89,56 @@ const loginUser = async (correo, contraseña) => {
     };
 };
 
+const registerClientPublic = async (userData) => {
+
+    const {
+        nombres,
+        apellidos,
+        correo,
+        contraseña
+    } = userData;
+
+    // 1. Verificar si el correo ya existe
+    const [existingUser] = await pool.query(
+        'SELECT * FROM usuario WHERE correo = ?',
+        [correo]
+    );
+
+    if (existingUser.length > 0) {
+        throw new Error('El correo ya está registrado');
+    }
+
+    // 2. Buscar rol CLIENTE en BD (más seguro que hardcodear id)
+    const [rolResult] = await pool.query(
+        'SELECT idRol FROM rol WHERE nombre = ?',
+        ['CLIENTE']
+    );
+
+    if (rolResult.length === 0) {
+        throw new Error('Rol CLIENTE no configurado');
+    }
+
+    const id_rol = rolResult[0].idRol;
+
+    // 3. Encriptar contraseña
+    const hashedPassword = await bcrypt.hash(contraseña, 10);
+
+    // 4. Insertar usuario
+    const [result] = await pool.query(
+        `INSERT INTO usuario 
+        (nombres, apellidos, correo, contraseña, id_rol)
+        VALUES (?, ?, ?, ?, ?)`,
+        [nombres, apellidos, correo, hashedPassword, id_rol]
+    );
+
+    return {
+        message: 'Cliente registrado correctamente',
+        idUsuario: result.insertId
+    };
+};
+
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    registerClientPublic
 };
